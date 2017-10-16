@@ -1,6 +1,8 @@
 ﻿using AiursoftBase.Exceptions;
+using AiursoftBase.Models;
 using AiursoftBase.Models.API.UserAddressModels;
 using API.Controllers;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -23,11 +25,21 @@ namespace API.Attributes
 
             if (target == null)
             {
-                throw new WrongAccessTokenException();
+                var arg = new AiurProtocal
+                {
+                    code = ErrorType.Unauthorized,
+                    message = "We can not validate your access token!"
+                };
+                context.Result = new JsonResult(arg);
             }
             else if (!target.IsAlive)
             {
-                throw new TimeOutAccessTokenException();
+                var arg = new AiurProtocal
+                {
+                    code = ErrorType.Unauthorized,
+                    message = "Your access token is already Timeout!"
+                };
+                context.Result = new JsonResult(arg);
             }
         }
     }
