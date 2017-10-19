@@ -13,5 +13,6 @@ namespace API.Models.HomeViewModels
         public string UserId { get; internal set; }
         public string UserImage { get; internal set; }
         public string UserName { get; internal set; }
+        public string Local { get; internal set; }
     }
 }

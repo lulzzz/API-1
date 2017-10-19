@@ -32,8 +32,6 @@ namespace API.Controllers
     {
         private readonly UserManager<APIUser> _userManager;
         private readonly SignInManager<APIUser> _signInManager;
-        private readonly IEmailSender _emailSender;
-        private readonly ISmsSender _smsSender;
         private readonly ILogger _logger;
         public readonly APIDbContext _dbContext;
         private readonly IStringLocalizer<ApiController> _localizer;
@@ -41,16 +39,12 @@ namespace API.Controllers
         public UserController(
             UserManager<APIUser> userManager,
             SignInManager<APIUser> signInManager,
-            IEmailSender emailSender,
-            ISmsSender smsSender,
             ILoggerFactory loggerFactory,
             APIDbContext _context,
             IStringLocalizer<ApiController> localizer)
         {
             _userManager = userManager;
             _signInManager = signInManager;
-            _emailSender = emailSender;
-            _smsSender = smsSender;
             _logger = loggerFactory.CreateLogger<ApiController>();
             _dbContext = _context;
             _localizer = localizer;

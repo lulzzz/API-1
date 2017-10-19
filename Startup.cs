@@ -48,11 +48,10 @@ namespace API
                 .AddDefaultTokenProviders();
 
             services
-                .AddLocalization(options => options.ResourcesPath = "Resources")
-                .AddTransient<IEmailSender, AuthMessageSender>()
-                .AddTransient<ISmsSender, AuthMessageSender>()
-                .AddTransient<DataCleaner>()
-                .AddMvc()
+                .AddLocalization(options => options.ResourcesPath = "Resources");
+
+            services.AddTransient<DataCleaner>();
+            services.AddMvc()
                 .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
                 .AddDataAnnotationsLocalization();
         }
