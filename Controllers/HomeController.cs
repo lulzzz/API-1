@@ -52,6 +52,7 @@ namespace API.Controllers
                 Local = _localizer["en-US"]
             });
         }
+
         private async Task<APIUser> GetCurrentUserAsync()
         {
             return await _userManager.GetUserAsync(HttpContext.User);

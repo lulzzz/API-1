@@ -342,6 +342,8 @@ namespace API.Controllers
         private async Task<IActionResult> FinishAuth(IOAuthInfo model, bool forceGrant = false)
         {
             var cuser = await GetCurrentUserAsync(model.Email);
+            cuser.PreferedLanguage = _localizer["en"];
+            await _userManager.UpdateAsync(cuser);
             if (await cuser.HasAuthorizedApp(_dbContext, model.AppId) && forceGrant == false)
             {
                 var pack = await cuser.GeneratePack(_dbContext, model.AppId);
