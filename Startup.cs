@@ -60,12 +60,12 @@ namespace API
         {
             var SupportedCultures = new CultureInfo[]
             {
-                new CultureInfo("en-US"),
-                new CultureInfo("zh-CN")
+                new CultureInfo("en"),
+                new CultureInfo("zh")
             };
             app.UseRequestLocalization(new RequestLocalizationOptions
             {
-                DefaultRequestCulture = new RequestCulture("en-US"),
+                DefaultRequestCulture = new RequestCulture("en"),
                 SupportedCultures = SupportedCultures,
                 SupportedUICultures = SupportedCultures
             });

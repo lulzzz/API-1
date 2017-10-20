@@ -49,7 +49,7 @@ namespace API.Controllers
                 UserImage = cuser?.HeadImgUrl,
                 code  = ErrorType.Success,
                 message = "Server started successfully!",
-                Local = _localizer["en-US"]
+                Local = _localizer["en"]
             });
         }
 
