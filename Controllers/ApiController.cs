@@ -74,17 +74,17 @@ namespace API.Controllers
                     user.PreferedLanguage = culture;
                     await _userManager.UpdateAsync(user);
                 }
-                return Redirect(new AiurUrl(host, "Api", "SetSonLang", new
+                string toGo = new AiurUrl(host, "Api", "SetSonLang", new
                 {
                     culture = culture,
                     returnUrl = path
-                }).ToString());
+                }).ToString();
+                return Redirect(toGo);
             }
             catch (CultureNotFoundException)
             {
                 return Json(new AiurProtocal { message = "Not a language.", code = ErrorType.InvalidInput });
             }
-            return Json(new AiurProtocal { message = "Changed", code = ErrorType.Success });
         }
 
         public async Task<JsonResult> ValidateAccessToken(string AccessToken)
