@@ -1,0 +1,13 @@
+﻿@model API.Models.ApiViewModels.SetlangViewModel
+@{
+    ViewData["Title"] = Localizer["Set Language"];
+}
+<div class="lock-wrapper">
+    <div class="panel lock-box" id="panelinSignin">
+    </div>
+    <hr />
+    @Localizer["Language:"]
+    <a href="javascript:setlang('zh','@Model.Host','@Model.Path')">中文 - 中国</a> |
+    <a href="javascript:setlang('en','@Model.Host','@Model.Path')">English - United States</a>
+</div>
+

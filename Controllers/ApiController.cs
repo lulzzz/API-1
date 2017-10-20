@@ -21,6 +21,7 @@ using AiursoftBase.Models.API.ApiAddressModels;
 using AiursoftBase.Attributes;
 using AiursoftBase;
 using AiursoftBase.Models.API;
+using API.Models.ApiViewModels;
 
 namespace API.Controllers
 {
@@ -47,8 +48,19 @@ namespace API.Controllers
             _dbContext = _context;
             _localizer = localizer;
         }
+
+        [HttpGet]
+        public IActionResult Setlang(string host, string path)
+        {
+            return View(new SetlangViewModel
+            {
+                Host = host,
+                Path = path
+            });
+        }
+
         [HttpPost]
-        public JsonResult SetLang(string culture = "en-US")
+        public async Task<IActionResult> SetLang(string culture, string host, string path)
         {
             try
             {
@@ -56,6 +68,17 @@ namespace API.Controllers
                 CookieRequestCultureProvider.DefaultCookieName,
                 CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(culture)),
                 new CookieOptions { Expires = DateTimeOffset.UtcNow.AddYears(1) });
+                var user = await GetCurrentUserAsync();
+                if (user != null)
+                {
+                    user.PreferedLanguage = culture;
+                    await _userManager.UpdateAsync(user);
+                }
+                return Redirect(new AiurUrl(host, "Api", "SetSonLang", new
+                {
+                    culture = culture,
+                    returnUrl = path
+                }).ToString());
             }
             catch (CultureNotFoundException)
             {
@@ -134,6 +157,11 @@ namespace API.Controllers
             model.Grants.AddRange(grants);
             return Json(model);
         }
-    }
 
+        private async Task<APIUser> GetCurrentUserAsync()
+        {
+            return await _dbContext.Users
+                .SingleOrDefaultAsync(t => t.UserName == User.Identity.Name);
+        }
+    }
 }
