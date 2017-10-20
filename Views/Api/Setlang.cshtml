@@ -7,7 +7,17 @@
     </div>
     <hr />
     @Localizer["Language:"]
-    <a href="javascript:setlang('zh','@Model.Host','@Model.Path')">中文 - 中国</a> |
-    <a href="javascript:setlang('en','@Model.Host','@Model.Path')">English - United States</a>
+    <form asp-controller="api" asp-action="setlang" method="post">
+        <input type="hidden" name="culture" value="zh" />
+        <input type="hidden" name="Host" value="@Model.Host" />
+        <input type="hidden" name="Path" value="@Model.Path" />
+        <input type="submit" value="中文 - 中国" />
+    </form>
+    <form asp-controller="api" asp-action="setlang" method="post">
+        <input type="hidden" name="culture" value="en" />
+        <input type="hidden" name="Host" value="@Model.Host" />
+        <input type="hidden" name="Path" value="@Model.Path" />
+        <input type="submit" value="English - United States" />
+    </form>
 </div>
 
