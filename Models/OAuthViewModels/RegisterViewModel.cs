@@ -35,6 +35,8 @@ namespace API.Models.OAuthViewModels
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
 
+        public string PreferedLanguage { get; set; }
+
         public string GetRegexRedirectUrl()
         {
             var url = new Uri(ToRedirect);

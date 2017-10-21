@@ -216,7 +216,13 @@ namespace API.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new APIUser { UserName = model.Email, Email = model.Email, NickName = model.Email.Split('@')[0] };
+                var user = new APIUser
+                {
+                    UserName = model.Email,
+                    Email = model.Email,
+                    NickName = model.Email.Split('@')[0],
+                    PreferedLanguage = model.PreferedLanguage
+                };
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
@@ -342,7 +348,6 @@ namespace API.Controllers
         private async Task<IActionResult> FinishAuth(IOAuthInfo model, bool forceGrant = false)
         {
             var cuser = await GetCurrentUserAsync(model.Email);
-            cuser.PreferedLanguage = _localizer["en"];
             await _userManager.UpdateAsync(cuser);
             if (await cuser.HasAuthorizedApp(_dbContext, model.AppId) && forceGrant == false)
             {

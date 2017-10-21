@@ -7,7 +7,7 @@
         <div class="center">
             <img class="img-circle" alt="" src="@Model.AppImageUrl">
         </div>
-        <h4>Register</h4>
+        <h4>@Localizer["Register"]</h4>
         <p class="text-center">Please login your @Values.ProjectName Account</p>
         <div class="row">
             <div class="form-inline">
@@ -35,6 +35,7 @@
                             <input class="form-control lock-input" type="password" asp-for="ConfirmPassword" placeholder="Confirm Password...">
                             <i class="fa fa-lock"></i>
                         </div>
+                        <input type="hidden" asp-for="PreferedLanguage" value="@Localizer["en"].Value" />
                         <button class="btn btn-block btn-primary" type="submit">Sign Up</button>
                     </form>
                 }
@@ -55,6 +56,9 @@
                                      asp-route-scope="@Model?.Scope"
                                      asp-route-response_type="@Model?.ResponseType"><span class="text-primary"> Sign In </span></a>
     </div>
+    @Localizer["Language:"]
+    <a href="javascript:clientSetLang('zh')">中文 - 中国</a> |
+    <a href="javascript:clientSetLang('en')">English - United States</a>
 </div>
 
 

@@ -26,6 +26,9 @@
     <EmbeddedResource Update="Resources\Controllers\HomeController.zh.resx">
       <Generator>ResXFileCodeGenerator</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Views\OAuth\Register.zh.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
   </ItemGroup>
 
 </Project>
