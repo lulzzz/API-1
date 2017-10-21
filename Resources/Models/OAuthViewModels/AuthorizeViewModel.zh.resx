@@ -120,4 +120,10 @@
   <data name="Aiursoft Account" xml:space="preserve">
     <value>Aiursoft账户</value>
   </data>
+  <data name="Password" xml:space="preserve">
+    <value>密码</value>
+  </data>
+  <data name="Remember Me" xml:space="preserve">
+    <value>保持登录</value>
+  </data>
 </root>

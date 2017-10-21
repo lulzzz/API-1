@@ -120,11 +120,17 @@
   <data name="Don't have an account ?" xml:space="preserve">
     <value>没有账号？</value>
   </data>
+  <data name="Enter your account" xml:space="preserve">
+    <value>输入帐户名</value>
+  </data>
   <data name="Hello User !" xml:space="preserve">
     <value>你好，朋友！</value>
   </data>
   <data name="Language:" xml:space="preserve">
     <value>语言：</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>密码</value>
   </data>
   <data name="Please login your Aiursoft Account to access" xml:space="preserve">
     <value>请登录你的Aiursoft账号来访问</value>

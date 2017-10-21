@@ -23,12 +23,12 @@
                         <input asp-for="ResponseType" type="hidden" />
                         <div class="iconic-input right">
                             <label asp-for="Email" class="text-muted"></label>
-                            <input type="email" asp-for="Email" class="form-control" placeholder="Enter @Values.ProjectName Account">
+                            <input type="email" asp-for="Email" class="form-control" placeholder="@Localizer["Enter your account"]">
                             <i class="fa fa-envelope"></i>
                         </div>
                         <div class="iconic-input right">
-                            <label asp-for="Password" class="text-muted">Password</label>
-                            <input class="form-control lock-input" type="password" asp-for="Password" placeholder="Password">
+                            <label asp-for="Password" class="text-muted">@Localizer["Password"]</label>
+                            <input class="form-control lock-input" type="password" asp-for="Password" placeholder="@Localizer["Password"]">
                             <i class="fa fa-lock"></i>
                         </div>
                         <div class="square-blue pull-left pv-15">
