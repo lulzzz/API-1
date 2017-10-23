@@ -6,10 +6,10 @@ using Microsoft.Extensions.Logging;
 using API.Services;
 using API.Models;
 using Microsoft.AspNetCore.Identity;
-using AiursoftBase.Models;
+using Aiursoft.Pylon.Models;
 using API.Models.HomeViewModels;
-using AiursoftBase;
-using AiursoftBase.Attributes;
+using Aiursoft.Pylon;
+using Aiursoft.Pylon.Attributes;
 using Microsoft.Extensions.Localization;
 
 namespace API.Controllers

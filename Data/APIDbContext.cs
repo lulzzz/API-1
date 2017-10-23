@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using API.Models;
-using AiursoftBase.Models.API;
+using Aiursoft.Pylon.Models.API;
 
 namespace API.Data
 {

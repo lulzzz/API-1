@@ -9,16 +9,16 @@ using API.Models.OAuthViewModels;
 using API.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
-using AiursoftBase.Services;
-using AiursoftBase.Models;
+using Aiursoft.Pylon.Services;
+using Aiursoft.Pylon.Models;
 using System.Linq;
 using Microsoft.Extensions.Localization;
-using AiursoftBase.Services.ToDeveloperServer;
-using AiursoftBase.Models.API.OAuthAddressModels;
-using AiursoftBase.Models.API.OAuthViewModels;
-using AiursoftBase.Models.ForApps.AddressModels;
-using AiursoftBase;
-using AiursoftBase.Attributes;
+using Aiursoft.Pylon.Services.ToDeveloperServer;
+using Aiursoft.Pylon.Models.API.OAuthAddressModels;
+using Aiursoft.Pylon.Models.API.OAuthViewModels;
+using Aiursoft.Pylon.Models.ForApps.AddressModels;
+using Aiursoft.Pylon;
+using Aiursoft.Pylon.Attributes;
 
 namespace API.Controllers
 {

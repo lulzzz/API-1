@@ -5,10 +5,10 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations.Schema;
 using API.Data;
-using AiursoftBase.Models;
+using Aiursoft.Pylon.Models;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
-using AiursoftBase.Models.API;
+using Aiursoft.Pylon.Models.API;
 
 namespace API.Models
 {

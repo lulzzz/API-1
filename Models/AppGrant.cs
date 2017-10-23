@@ -1,5 +1,5 @@
-﻿using AiursoftBase.Models;
-using AiursoftBase.Models.API;
+﻿using Aiursoft.Pylon.Models;
+using Aiursoft.Pylon.Models.API;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
