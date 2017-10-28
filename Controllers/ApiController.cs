@@ -27,7 +27,7 @@ namespace Aiursoft.API.Controllers
 {
     [AiurExceptionHandler]
     [AiurRequireHttps]
-    public class ApiController : AiurController
+    public class ApiController : AiurApiController
     {
         private readonly UserManager<APIUser> _userManager;
         private readonly SignInManager<APIUser> _signInManager;
