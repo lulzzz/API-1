@@ -61,8 +61,10 @@
         </a>
     </div>
     <hr />
-    @Localizer["Language:"]
-    <a href="javascript:clientSetLang('zh')">中文 - 中国</a> |
-    <a href="javascript:clientSetLang('en')">English - United States</a>
+    <a href="@(new AiurUrl(Values.ApiServerAddress, "Api", "SetLang", new
+                 {
+                     Host = $"{Context.Request.Scheme}://{Context.Request.Host}",
+                     Path = Context.Request.Path
+                 }))">Language(语言)</a>
 </div>
 

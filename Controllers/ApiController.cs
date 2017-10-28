@@ -57,20 +57,6 @@ namespace Aiursoft.API.Controllers
                 new CookieOptions { Expires = DateTimeOffset.UtcNow.AddYears(1) });
         }
 
-        [HttpPost]
-        public IActionResult ClientSetLang(string culture)
-        {
-            try
-            {
-                _ApplyCultureCookie(culture);
-                return Json(new AiurProtocal { message = "Success.", code = ErrorType.Success });
-            }
-            catch (CultureNotFoundException)
-            {
-                return Json(new AiurProtocal { message = "Not a language.", code = ErrorType.InvalidInput });
-            }
-        }
-
         [HttpGet]
         public IActionResult Setlang(string host, string path)
         {
