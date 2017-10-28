@@ -5,7 +5,7 @@
 <div class="lock-wrapper">
     <div class="panel lock-box" id="panelinSignin">
         <div class="center">
-            <img class="img-circle" style="height:100px;width:100px;" src="@Model.UserIcon">
+            <img class="img-circle" style="height:100px;width:100px;" src="@(Model.UserIcon)?w=100&h=100">
         </div>
         <h4> Hello @Html.DisplayFor(t => t.UserNickName) !</h4>
         <p class="text-center">Do you want to use your identity to sign in </p>
