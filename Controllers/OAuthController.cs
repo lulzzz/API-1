@@ -23,6 +23,7 @@ using Aiursoft.Pylon.Attributes;
 namespace Aiursoft.API.Controllers
 {
     [AiurRequireHttps]
+    [ForceValidateModelState]
     public class OAuthController : AiurController
     {
         private readonly UserManager<APIUser> _userManager;

@@ -64,7 +64,7 @@
     <a href="@(new AiurUrl(Values.ApiServerAddress, "Api", "SetLang", new
                  {
                      Host = $"{Context.Request.Scheme}://{Context.Request.Host}",
-                     Path = Context.Request.Path
+                     Path = Context.Request.Path + Context.Request.QueryString
                  }))">Language(语言)</a>
 </div>
 
