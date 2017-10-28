@@ -6,7 +6,7 @@
     <AssemblyName>Aiursoft.API</AssemblyName>
     <PackageId>Aiursoft.API</PackageId>
     <Company>Aiursoft</Company>
-    <Product>AiursoftBWeb</Product>
+    <Product>AiursoftWeb</Product>
     <Authors>Anduin</Authors>
     <Description>All core API implementations for Aiursoft authorization.</Description>
   </PropertyGroup>
