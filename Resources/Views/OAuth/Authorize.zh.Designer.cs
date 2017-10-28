@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace API.Resources.Views.OAuth {
+namespace Aiursoft.API.Resources.Views.OAuth {
     using System;
     using System.Reflection;
     

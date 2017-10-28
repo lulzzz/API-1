@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using API.Data;
+using Aiursoft.API.Data;
 
-namespace API.Services
+namespace Aiursoft.API.Services
 {
     public class DataCleaner
     {

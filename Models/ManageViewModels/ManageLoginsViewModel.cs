@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http.Authentication;
 using Microsoft.AspNetCore.Identity;
 
-namespace API.Models.ManageViewModels
+namespace Aiursoft.API.Models.ManageViewModels
 {
     public class ManageLoginsViewModel
     {

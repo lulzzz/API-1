@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace API.Data.Migrations
+namespace Aiursoft.API.Data.Migrations
 {
     public partial class okIllgoback : Migration
     {

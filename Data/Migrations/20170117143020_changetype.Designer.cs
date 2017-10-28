@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
-using API.Data;
+using Aiursoft.API.Data;
 
-namespace API.Data.Migrations
+namespace Aiursoft.API.Data.Migrations
 {
     [DbContext(typeof(APIDbContext))]
     [Migration("20170117143020_changetype")]

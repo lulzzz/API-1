@@ -4,10 +4,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using API.Models;
+using Aiursoft.API.Models;
 using Aiursoft.Pylon.Models.API;
 
-namespace API.Data
+namespace Aiursoft.API.Data
 {
     public class APIDbContext : IdentityDbContext<APIUser>
     {

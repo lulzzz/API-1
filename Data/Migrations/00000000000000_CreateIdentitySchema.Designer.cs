@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace API.Data.Migrations
+namespace Aiursoft.API.Data.Migrations
 {
     [DbContext(typeof(APIDbContext))]
     [Migration("00000000000000_CreateIdentitySchema")]

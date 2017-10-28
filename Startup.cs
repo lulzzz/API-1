@@ -5,9 +5,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using API.Data;
-using API.Models;
-using API.Services;
+using Aiursoft.API.Data;
+using Aiursoft.API.Models;
+using Aiursoft.API.Services;
 using Microsoft.AspNetCore.Identity;
 using System;
 using Microsoft.AspNetCore.Mvc.Razor;
@@ -15,7 +15,7 @@ using System.Globalization;
 using Microsoft.AspNetCore.Localization;
 using Aiursoft.Pylon;
 
-namespace API
+namespace Aiursoft.API
 {
     public class Startup
     {
@@ -74,10 +74,6 @@ namespace API
             {
                 app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();
-            }
-            else
-            {
-                app.UseExceptionHandler("/Home/Error");
             }
 
             app.UseStaticFiles();

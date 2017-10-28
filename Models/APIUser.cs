@@ -4,13 +4,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations.Schema;
-using API.Data;
+using Aiursoft.API.Data;
 using Aiursoft.Pylon.Models;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using Aiursoft.Pylon.Models.API;
 
-namespace API.Models
+namespace Aiursoft.API.Models
 {
     // Add profile data for application users by adding properties to the ApplicationUser class
     public class APIUser : AiurUserBase

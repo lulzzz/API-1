@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace API.Data
+namespace Aiursoft.API.Data
 {
     public static class TimeoutCleaner
     {

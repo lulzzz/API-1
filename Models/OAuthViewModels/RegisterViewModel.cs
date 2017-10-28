@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace API.Models.OAuthViewModels
+namespace Aiursoft.API.Models.OAuthViewModels
 {
 
     public class RegisterViewModel : IOAuthInfo

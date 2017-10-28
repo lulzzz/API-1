@@ -1,12 +1,12 @@
 using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using API.Services;
-using API.Models;
+using Aiursoft.API.Services;
+using Aiursoft.API.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
-using API.Models.OAuthViewModels;
-using API.Data;
+using Aiursoft.API.Models.OAuthViewModels;
+using Aiursoft.API.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Aiursoft.Pylon.Services;
@@ -20,7 +20,7 @@ using Aiursoft.Pylon.Models.ForApps.AddressModels;
 using Aiursoft.Pylon;
 using Aiursoft.Pylon.Attributes;
 
-namespace API.Controllers
+namespace Aiursoft.API.Controllers
 {
     [AiurRequireHttps]
     public class OAuthController : AiurController

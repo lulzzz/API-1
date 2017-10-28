@@ -8,10 +8,10 @@ using Microsoft.AspNetCore.Http;
 using System.Globalization;
 using Aiursoft.Pylon.Models;
 using Microsoft.AspNetCore.Identity;
-using API.Models;
-using API.Services;
+using Aiursoft.API.Models;
+using Aiursoft.API.Services;
 using Microsoft.Extensions.Logging;
-using API.Data;
+using Aiursoft.API.Data;
 using Microsoft.Extensions.Localization;
 using Microsoft.EntityFrameworkCore;
 using Aiursoft.Pylon.Services;
@@ -21,9 +21,9 @@ using Aiursoft.Pylon.Models.API.ApiAddressModels;
 using Aiursoft.Pylon.Attributes;
 using Aiursoft.Pylon;
 using Aiursoft.Pylon.Models.API;
-using API.Models.ApiViewModels;
+using Aiursoft.API.Models.ApiViewModels;
 
-namespace API.Controllers
+namespace Aiursoft.API.Controllers
 {
     [AiurExceptionHandler]
     [AiurRequireHttps]

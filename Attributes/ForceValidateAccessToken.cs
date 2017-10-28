@@ -1,7 +1,7 @@
 ﻿using Aiursoft.Pylon.Exceptions;
 using Aiursoft.Pylon.Models;
 using Aiursoft.Pylon.Models.API.UserAddressModels;
-using API.Controllers;
+using Aiursoft.API.Controllers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.EntityFrameworkCore;
@@ -10,7 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace API.Attributes
+namespace Aiursoft.API.Attributes
 {
     public class ForceValidateAccessToken : ActionFilterAttribute
     {

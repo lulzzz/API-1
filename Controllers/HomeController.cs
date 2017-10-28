@@ -1,18 +1,18 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using API.Data;
+using Aiursoft.API.Data;
 using Microsoft.Extensions.Logging;
-using API.Services;
-using API.Models;
+using Aiursoft.API.Services;
+using Aiursoft.API.Models;
 using Microsoft.AspNetCore.Identity;
 using Aiursoft.Pylon.Models;
-using API.Models.HomeViewModels;
+using Aiursoft.API.Models.HomeViewModels;
 using Aiursoft.Pylon;
 using Aiursoft.Pylon.Attributes;
 using Microsoft.Extensions.Localization;
 
-namespace API.Controllers
+namespace Aiursoft.API.Controllers
 {
     [AiurRequireHttps]
     public class HomeController : AiurController

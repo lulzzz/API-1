@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace API.Models.ManageViewModels
+namespace Aiursoft.API.Models.ManageViewModels
 {
     public class SetPasswordViewModel
     {

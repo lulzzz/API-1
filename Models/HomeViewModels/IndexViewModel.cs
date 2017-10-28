@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace API.Models.HomeViewModels
+namespace Aiursoft.API.Models.HomeViewModels
 {
     public class IndexViewModel : AiurProtocal
     {

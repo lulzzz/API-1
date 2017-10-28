@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Metadata;
 
-namespace API.Data.Migrations
+namespace Aiursoft.API.Data.Migrations
 {
     public partial class CreateUserGrant : Migration
     {
