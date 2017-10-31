@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Mvc.Razor;
 using System.Globalization;
 using Microsoft.AspNetCore.Localization;
 using Aiursoft.Pylon;
+using Aiursoft.Pylon.Services;
 
 namespace Aiursoft.API
 {
@@ -51,6 +52,7 @@ namespace Aiursoft.API
                 .AddLocalization(options => options.ResourcesPath = "Resources");
 
             services.AddTransient<DataCleaner>();
+            services.AddTransient<AiurEmailSender>();
             services.AddMvc()
                 .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
                 .AddDataAnnotationsLocalization();
