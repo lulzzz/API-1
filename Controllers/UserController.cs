@@ -36,19 +36,23 @@ namespace Aiursoft.API.Controllers
         private readonly ILogger _logger;
         public readonly APIDbContext _dbContext;
         private readonly IStringLocalizer<ApiController> _localizer;
+        private readonly AiurEmailSender _emailSender;
+
 
         public UserController(
             UserManager<APIUser> userManager,
             SignInManager<APIUser> signInManager,
             ILoggerFactory loggerFactory,
             APIDbContext _context,
-            IStringLocalizer<ApiController> localizer)
+            IStringLocalizer<ApiController> localizer,
+            AiurEmailSender emailSender)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = loggerFactory.CreateLogger<ApiController>();
             _dbContext = _context;
             _localizer = localizer;
+            _emailSender = emailSender;
         }
 
         [ForceValidateModelState]
@@ -111,15 +115,38 @@ namespace Aiursoft.API.Controllers
         }
 
         [HttpPost]
-        public IActionResult ForgotPassword(ForgotPasswordViewModel model)
+        public async Task<IActionResult> ForgotPassword(ForgotPasswordViewModel model)
         {
-            return RedirectToAction(nameof(ForgotPasswordSent));
+            if (ModelState.IsValid)
+            {
+                var user = await _userManager.FindByEmailAsync(model.Email);
+                if (user == null)
+                {
+                    return RedirectToAction(nameof(ForgotPasswordSent));
+                }
+                var code = await _userManager.GeneratePasswordResetTokenAsync(user);
+                var callbackUrl = new AiurUrl(Values.ApiServerAddress, "User", nameof(ResetPassword), new
+                {
+                    code = code,
+                    userId = user.Id
+                });
+                await _emailSender.SendEmail(model.Email, "Reset Password", 
+                    $"Please reset your password by clicking <a href='{callbackUrl}'>here</a>");
+                return RedirectToAction(nameof(ForgotPasswordSent));
+            }
+            return View(model);
         }
 
         [HttpGet]
         public IActionResult ForgotPasswordSent()
         {
             return View();
+        }
+
+        [HttpGet]
+        public IActionResult ResetPassword(string code = null)
+        {
+            throw new NotImplementedException();
         }
     }
 }
