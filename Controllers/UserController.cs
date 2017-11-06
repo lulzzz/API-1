@@ -23,6 +23,7 @@ using Aiursoft.Pylon;
 using Aiursoft.Pylon.Models.API;
 using Aiursoft.Pylon.Models.API.UserAddressModels;
 using Aiursoft.API.Attributes;
+using Aiursoft.API.Models.UserViewModels;
 
 namespace Aiursoft.API.Controllers
 {
@@ -103,7 +104,20 @@ namespace Aiursoft.API.Controllers
             }
         }
 
+        [HttpGet]
         public IActionResult ForgotPassword()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult ForgotPassword(ForgotPasswordViewModel model)
+        {
+            return RedirectToAction(nameof(ForgotPasswordSent));
+        }
+
+        [HttpGet]
+        public IActionResult ForgotPasswordSent()
         {
             return View();
         }
