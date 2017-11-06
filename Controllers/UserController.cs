@@ -150,7 +150,10 @@ namespace Aiursoft.API.Controllers
             {
                 return RedirectToAction(nameof(ForgotPassword));
             }
-            var model = new ResetPasswordViewModel();
+            var model = new ResetPasswordViewModel
+            {
+                Code = code
+            };
             return View();
         }
 
