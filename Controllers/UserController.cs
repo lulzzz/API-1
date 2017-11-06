@@ -102,5 +102,10 @@ namespace Aiursoft.API.Controllers
                 return Json(new AiurProtocal { code = ErrorType.WrongKey, message = result.Errors.First().Description });
             }
         }
+
+        public IActionResult ForgotPassword()
+        {
+            return View();
+        }
     }
 }
