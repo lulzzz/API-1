@@ -4,8 +4,8 @@
 }
 <div class="lock-wrapper">
     <div class="panel lock-box" id="panelinSignin">
-
-        @Localizer["Change Language:"]
+        <h4>@Localizer["Change Language"]</h4>
+        Click the following language you are speaking:
         <form asp-controller="api" asp-action="setlang" method="post">
             <input type="hidden" name="culture" value="zh" />
             <input type="hidden" name="Host" value="@Model.Host" />
