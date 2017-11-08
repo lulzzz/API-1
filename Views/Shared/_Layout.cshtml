@@ -9,8 +9,8 @@
 
 
     <environment names="Development">
-        <link href="@Values.CdnServerAddress/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-        <link href="@Values.CdnServerAddress/lib/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+        <link href="@Values.CdnServerAddress/node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link href="@Values.CdnServerAddress/node_modules/font-awesome/css/font-awesome.min.css" rel="stylesheet">
         <link href="@Values.CdnServerAddress/css/OAuthUI.css" rel="stylesheet">
     </environment>
     <environment names="Staging,Production">
@@ -22,11 +22,11 @@
 <body>
     @RenderBody()
     <environment names="Development">
-        <script src="@Values.CdnServerAddress/lib/jquery/dist/jquery.min.js"></script>
-        <script src="@Values.CdnServerAddress/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+        <script src="@Values.CdnServerAddress/node_modules/jquery/dist/jquery.min.js"></script>
+        <script src="@Values.CdnServerAddress/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
         <script src="@Values.CdnServerAddress/js/OAuthUI.js"></script>
-        <script src="@Values.CdnServerAddress/lib/jquery-validation/dist/jquery.validate.js"></script>
-        <script src="@Values.CdnServerAddress/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+        <script src="@Values.CdnServerAddress/node_modules/jquery-validation/dist/jquery.validate.js"></script>
+        <script src="@Values.CdnServerAddress/node_modules/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
     </environment>
     <environment names="Staging,Production">
         <script src="@Values.CdnServerAddress/dist/OAuthUI.min.js" asp-append-version="true"></script>
