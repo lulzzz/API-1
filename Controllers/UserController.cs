@@ -131,7 +131,7 @@ namespace Aiursoft.API.Controllers
                     userId = user.Id
                 });
                 await _emailSender.SendEmail(model.Email, "Reset Password", 
-                    $"Please reset your password by clicking <a href='{callbackUrl}'>here</a>");
+                    $"Please reset your password by clicking <a href='{callbackUrl}'>here</a>", Startup.emailPassword);
                 return RedirectToAction(nameof(ForgotPasswordSent));
             }
             return View(model);

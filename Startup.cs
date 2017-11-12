@@ -21,6 +21,7 @@ namespace Aiursoft.API
     public class Startup
     {
         public IConfiguration Configuration { get; }
+        public static string emailPassword { get; private set; }
         public bool IsDevelopment { get; set; }
 
         public Startup(IConfiguration configuration, IHostingEnvironment env)
@@ -35,7 +36,9 @@ namespace Aiursoft.API
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.ConnectToAiursoftDatabase<APIDbContext>("API",IsDevelopment);
+            services.ConnectToAiursoftDatabase<APIDbContext>("API", IsDevelopment);
+            emailPassword = Configuration["emailpassword"];
+            Console.WriteLine($"Email sender password is: {emailPassword}");
             services.AddIdentity<APIUser, IdentityRole>(options =>
                 options.Password = new PasswordOptions
                 {
