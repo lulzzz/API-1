@@ -17,9 +17,9 @@ All core API implementations for Aiursoft authorization.
 
 Please excuse the following commands in the project folder:
 
+    set ASPNETCORE_ENVIRONMENT Development
     dotnet restore
     dotnet ef database update
-    set ASPNETCORE_ENVIRONMENT Development
     dotnet run
 
 ### Run in Visual Studio
@@ -28,6 +28,19 @@ Please install Visual Studio 2017 with .NET Core development kit.
 
 1. Double click the `.sln` file.
 2. Strike `F5`.
+
+## How to publish
+
+Please excuse the following commands in the project folder:
+
+    set ASPNETCORE_ENVIRONMENT Production
+    dotnet restore
+    dotnet ef database update
+    dotnet publish
+
+If you have IIS installed already, just config the web path to:
+
+    .\bin\Debug\netcoreapp2.0\publish
 
 ## What is stored in its database
 
