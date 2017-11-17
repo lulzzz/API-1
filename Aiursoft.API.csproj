@@ -9,7 +9,7 @@
     <Product>AiursoftWeb</Product>
     <Authors>Anduin</Authors>
     <Description>All core API implementations for Aiursoft authorization.</Description>
-     <PackageTags>api</PackageTags>
+    <PackageTags>api</PackageTags>
     <PackageIconUrl>https://oss.aiursoft.com/MyPersonalFiles/512x512.png</PackageIconUrl>
     <PackageProjectUrl>https://github.com/AiursoftWeb/API</PackageProjectUrl>
     <PackageLicenseUrl>https://opensource.org/licenses/MIT</PackageLicenseUrl>
