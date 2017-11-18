@@ -2,74 +2,50 @@
 @{
     ViewData["Title"] = Localizer["Sign in"];
 }
-<div class="lock-wrapper">
-    <div class="panel lock-box" id="panelinSignin">
-        <div class="center">
-            <img class="img-circle" style="height:100px;width:100px" src="@(Model.AppImageUrl)?w=100&h=100">
-        </div>
-        <h4>@Localizer["Hello User !"]</h4>
-        <p class="text-center">@Localizer["Please login your Aiursoft Account to access"]</p>
-        <p class="text-center"><strong>@Html.DisplayFor(t => t.AppName)</strong></p>
-        <div class="row">
-            <div class="form-inline">
-                @if (Model != null)
-                {
-                    <form class="form-group col-md-12" asp-controller="OAuth" asp-action="Authorize" method="post">
-                        <div asp-validation-summary="All" class="text-danger"></div>
-                        <input asp-for="ToRedirect" type="hidden" />
-                        <input asp-for="State" type="hidden" />
-                        <input asp-for="AppId" type="hidden" />
-                        <input asp-for="Scope" type="hidden" />
-                        <input asp-for="ResponseType" type="hidden" />
-                        <div class="iconic-input right">
-                            <label asp-for="Email" class="text-muted"></label>
-                            <input type="email" asp-for="Email" class="form-control" placeholder="@Localizer["Enter your account"]">
-                            <i class="fa fa-envelope"></i>
-                        </div>
-                        <div class="iconic-input right">
-                            <label asp-for="Password" class="text-muted">@Localizer["Password"]</label>
-                            <input class="form-control lock-input" type="password" asp-for="Password" placeholder="@Localizer["Password"]">
-                            <i class="fa fa-lock"></i>
-                        </div>
-                        <div class="square-blue pull-left pv-15">
-                            <p class="text-muted">
-                                <label asp-for="RememberMe"></label>
-                            </p>
-                            <label class="switch switch-info">
-                                <input name="rememberme" asp-for="RememberMe" type="checkbox">
-                                <i></i>
-                            </label>
-                        </div>
-                        <button class="btn btn-block btn-primary" type="submit">Sign In</button>
-                        <div class="registration">
-                            @Localizer["Forgot password?"]
-                            <a asp-controller="User" asp-action="ForgotPassword" target="_blank">
-                                <span class="text-primary">@Localizer["Click here to reset"]</span>
-                            </a>
-                        </div>
-                    </form>
-                }
-                else
-                {
-                    <div class="col-md-12 alert-danger">
-                        An error occured with oauth system!
-                        <div asp-validation-summary="All" class="text-danger"></div>
-                    </div>
-                }
+<div class="container">
+    <div class="card card-login mx-auto mt-5">
+        <div class="card-header">Login to @Model.AppName</div>
+
+        <div class="card-body">
+            <div class="text-center">
+                <img class="rounded" style="height:100px;width:100px;" src="@(Model.AppImageUrl)?w=100&h=100">
             </div>
-        </div>
-    </div>
-    <div>
-        @Localizer["Don't have an account ?"]
-        <a asp-controller="OAuth" asp-action="Register" asp-route-redirect_uri="@Model?.ToRedirect" asp-route-state="@Model?.State" asp-route-appid="@Model?.AppId" asp-route-scope="@Model?.Scope" asp-route-response_type="@Model?.ResponseType">
-            <span class="text-primary"> @Localizer["Sign Up"]</span>
-        </a>
-    </div>
-    <hr />
-    <a href="@(new AiurUrl(Values.ApiServerAddress, "Api", "SetLang", new
+            <form asp-controller="OAuth" asp-action="Authorize" method="post">
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <input asp-for="ToRedirect" type="hidden" />
+                <input asp-for="State" type="hidden" />
+                <input asp-for="AppId" type="hidden" />
+                <input asp-for="Scope" type="hidden" />
+                <input asp-for="ResponseType" type="hidden" />
+                <div class="form-group">
+                    <label asp-for="Email"></label>
+                    <input class="form-control" type="email" asp-for="Email" placeholder="@Localizer["Enter your account"]">
+                </div>
+                <div class="form-group">
+                    <label asp-for="Password">@Localizer["Password"]</label>
+                    <input class="form-control" type="password" asp-for="Password" placeholder="@Localizer["Password"]">
+                </div>
+                <div class="form-group">
+                    <div class="form-check">
+                        <label class="form-check-label">
+                            <input class="form-check-input" name="rememberme" asp-for="RememberMe" type="checkbox">
+                            Remember Password
+                        </label>
+                    </div>
+                </div>
+                <button class="btn btn-primary btn-block" type="submit">Login</button>
+                <a class="btn btn-info btn-block" asp-controller="OAuth" asp-action="Register" asp-route-redirect_uri="@Model?.ToRedirect" asp-route-state="@Model?.State" asp-route-appid="@Model?.AppId" asp-route-scope="@Model?.Scope" asp-route-response_type="@Model?.ResponseType">Sign up</a>
+            </form>
+            <div class="text-center">
+                <a class="d-block small" asp-controller="User" asp-action="ForgotPassword" target="_blank">
+                    Forgot Password?
+                </a>
+                <a class="d-block small" href="@(new AiurUrl(Values.ApiServerAddress, "Api", "SetLang", new
                  {
                      Host = $"{Context.Request.Scheme}://{Context.Request.Host}",
                      Path = Context.Request.Path + Context.Request.QueryString
                  }))">Language(语言)</a>
+            </div>
+        </div>
+    </div>
 </div>
-
