@@ -8,7 +8,7 @@
         <div class="card-header">Authorize Confirm</div>
         <div class="card-body">
             <div class="text-center">
-                <img class="rounded" src="@(Model.UserIcon)?w=100&h=100">
+                <img class="rounded" style="width:100px;height:100px;" src="@(Model.UserIcon)?w=100&h=100">
             </div>
             <div class="text-center mt-4 mb-5">
                 <h4>Hello @Html.DisplayFor(t => t.UserNickName) !</h4>
@@ -28,7 +28,7 @@
                 <input asp-for="State" type="hidden" />
                 <input asp-for="Scope" type="hidden" />
                 <input asp-for="ResponseType" type="hidden" />
-                <div class="text-center mt-4 mb-5">
+                <p>
                     <a asp-action="Authorize" asp-controller="OAuth"
                        asp-route-redirect_uri="@Model.ToRedirect"
                        asp-route-state="@Model.State"
@@ -38,14 +38,14 @@
                        asp-route-forceConfirm="true">
                         Click here
                     </a>to switch to another account.
-                </div>
+                </p>
 
                 <div class="row">
-                    <div class="col-md-3 col-sm-3 col-xs-3 col-md-offset-6 col-sm-offset-6 col-xs-offset-6">
+                    <div class="col-md-3">
                         <button class="btn btn-block btn-success" type="submit">Allow</button>
                     </div>
-                    <div class="col-md-3 col-sm-3 col-xs-3">
-                        <a class="btn btn-block btn-default" href="@Model.GetRedirectRoot()">Deny</a>
+                    <div class="col-md-3">
+                        <a class="btn btn-block btn-info" href="@Model.GetRedirectRoot()">Deny</a>
                     </div>
                 </div>
             </form>
