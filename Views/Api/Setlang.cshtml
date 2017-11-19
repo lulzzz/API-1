@@ -2,22 +2,24 @@
 @{
     ViewData["Title"] = Localizer["Set Language"];
 }
-<div class="lock-wrapper">
-    <div class="panel lock-box" id="panelinSignin">
-        <h4>@Localizer["Change Language"]</h4>
-        Click the following language you are speaking:
-        <form asp-controller="api" asp-action="setlang" method="post">
-            <input type="hidden" name="culture" value="zh" />
-            <input type="hidden" name="Host" value="@Model.Host" />
-            <input type="hidden" name="Path" value="@Model.Path" />
-            <input class="btn btn-block btn-primary" type="submit" value="中文 - 中国" />
-        </form>
-        <form asp-controller="api" asp-action="setlang" method="post">
-            <input type="hidden" name="culture" value="en" />
-            <input type="hidden" name="Host" value="@Model.Host" />
-            <input type="hidden" name="Path" value="@Model.Path" />
-            <input class="btn btn-block btn-primary" type="submit" value="English - United States" />
-        </form>
+
+<div class="container">
+    <div class="card card-login mx-auto mt-5">
+        <div class="card-header">@Localizer["Change Language"]</div>
+        <div class="card-body">
+            <p>Click the following language you are speaking:</p>
+            <form asp-controller="api" asp-action="setlang" method="post">
+                <input type="hidden" name="culture" value="zh" />
+                <input type="hidden" name="Host" value="@Model.Host" />
+                <input type="hidden" name="Path" value="@Model.Path" />
+                <input class="btn btn-block btn-primary" type="submit" value="中文 - 中国" />
+            </form>
+            <form asp-controller="api" asp-action="setlang" class="pt-2" method="post">
+                <input type="hidden" name="culture" value="en" />
+                <input type="hidden" name="Host" value="@Model.Host" />
+                <input type="hidden" name="Path" value="@Model.Path" />
+                <input class="btn btn-block btn-primary" type="submit" value="English - United States" />
+            </form>
+        </div>
     </div>
 </div>
-
