@@ -87,7 +87,7 @@ namespace Aiursoft.API.Controllers
             var capp = (await ApiService.AppInfoAsync(model.AppId)).App;
             if (ModelState.IsValid)
             {
-                var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, isPersistent: model.RememberMe, lockoutOnFailure: true);
+                var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, isPersistent: true, lockoutOnFailure: true);
                 if (result.Succeeded)
                 {
                     return await FinishAuth(model, capp.ForceConfirmation);

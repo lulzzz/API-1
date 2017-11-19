@@ -22,7 +22,6 @@ namespace Aiursoft.API.Models.OAuthViewModels
         }
         public void Recover(string AppName, string AppImageUrl)
         {
-
             this.AppName = AppName;
             this.AppImageUrl = AppImageUrl;
         }
@@ -42,8 +41,6 @@ namespace Aiursoft.API.Models.OAuthViewModels
         [Url]
         public string ToRedirect { get; set; }
 
-        [Display(Name = "Remember Me")]
-        public bool RememberMe { get; set; } = true;
         public string State { get; set; }
         public string AppId { get; set; }
         public string ResponseType { get; set; }
