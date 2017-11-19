@@ -38,6 +38,10 @@ namespace Aiursoft.API
         {
             services.ConnectToAiursoftDatabase<APIDbContext>("API", IsDevelopment);
             emailPassword = Configuration["emailpassword"];
+            if(string.IsNullOrWhiteSpace(emailPassword))
+            {
+                throw new InvalidOperationException("Did not get email password from configuration!");
+            }
             Console.WriteLine($"Email sender password is: {emailPassword}");
             services.AddIdentity<APIUser, IdentityRole>(options =>
                 options.Password = new PasswordOptions
