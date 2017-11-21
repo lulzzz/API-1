@@ -4,7 +4,7 @@
 }
 <div class="container">
     <div class="card card-register mx-auto mt-5">
-        <div class="card-header">@ViewData["Title"] = "Sign Up";</div>
+        <div class="card-header">@ViewData["Title"]</div>
         <div class="card-body">
             <div class="text-center">
                 <img class="rounded" src="@(Model.AppImageUrl)?w=100&h=100">
@@ -33,11 +33,11 @@
                         </div>
                     </div>
                 </div>
-                <button class="btn btn-primary btn-block" type="submit">Register</button>
+                <button class="btn btn-primary btn-block" type="submit">Sign up</button>
             </form>
         </div>
         <a class="card-footer clearfix small z-1" asp-controller="OAuth" asp-action="Authorize" asp-route-redirect_uri="@Model?.ToRedirect" asp-route-state="@Model?.State" asp-route-appid="@Model?.AppId" asp-route-scope="@Model?.Scope" asp-route-response_type="@Model?.ResponseType">
-            <span class="float-left">Sign up</span>
+            <span class="float-left">Sign in</span>
             <span class="float-right">
                 <i class="fa fa-angle-right"></i>
             </span>
