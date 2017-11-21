@@ -29,8 +29,13 @@
                     </a>
                 </div>
                 <button class="btn btn-primary btn-block" type="submit">Login</button>
-                <a class="btn btn-info btn-block" asp-controller="OAuth" asp-action="Register" asp-route-redirect_uri="@Model?.ToRedirect" asp-route-state="@Model?.State" asp-route-appid="@Model?.AppId" asp-route-scope="@Model?.Scope" asp-route-response_type="@Model?.ResponseType">Sign up</a>
             </form>
         </div>
+        <a class="card-footer clearfix small z-1" asp-controller="OAuth" asp-action="Register" asp-route-redirect_uri="@Model?.ToRedirect" asp-route-state="@Model?.State" asp-route-appid="@Model?.AppId" asp-route-scope="@Model?.Scope" asp-route-response_type="@Model?.ResponseType">
+            <span class="float-left">Sign up</span>
+            <span class="float-right">
+                <i class="fa fa-angle-right"></i>
+            </span>
+        </a>
     </div>
 </div>
