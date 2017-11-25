@@ -28,7 +28,6 @@ using Aiursoft.API.Models.UserViewModels;
 namespace Aiursoft.API.Controllers
 {
     [AiurRequireHttps]
-    [AiurExceptionHandler]
     public class UserController : AiurController
     {
         private readonly UserManager<APIUser> _userManager;
@@ -57,6 +56,7 @@ namespace Aiursoft.API.Controllers
 
         [ForceValidateModelState]
         [ForceValidateAccessToken]
+        [AiurExceptionHandler]
         public async Task<JsonResult> ChangeProfile(ChangeProfileAddressModel model)
         {
             var target = await _dbContext
@@ -84,6 +84,7 @@ namespace Aiursoft.API.Controllers
 
         [ForceValidateModelState]
         [ForceValidateAccessToken]
+        [AiurExceptionHandler]
         public async Task<JsonResult> ChangePassword(ChangePasswordAddressModel model)
         {
             var target = await _dbContext

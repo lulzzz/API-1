@@ -25,7 +25,6 @@ using Aiursoft.API.Models.ApiViewModels;
 
 namespace Aiursoft.API.Controllers
 {
-    [AiurExceptionHandler]
     [AiurRequireHttps]
     public class ApiController : AiurApiController
     {
@@ -92,6 +91,7 @@ namespace Aiursoft.API.Controllers
             }
         }
 
+        [AiurExceptionHandler]
         public async Task<JsonResult> ValidateAccessToken(string AccessToken)
         {
             var target = await _dbContext.AccessToken
@@ -115,6 +115,7 @@ namespace Aiursoft.API.Controllers
             }
         }
 
+        [AiurExceptionHandler]
         public async Task<IActionResult> AccessToken(AccessTokenAddressModel model)
         {
             var AppValidateState = await ApiService.IsValidAppAsync(model.AppId, model.AppSecret);
@@ -138,6 +139,7 @@ namespace Aiursoft.API.Controllers
             });
         }
 
+        [AiurExceptionHandler]
         public async Task<IActionResult> AllUserGranted(string AccessToken)
         {
             var target = await _dbContext.AccessToken
