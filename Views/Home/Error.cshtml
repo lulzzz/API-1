@@ -1,0 +1,20 @@
+@{
+    ViewData["Title"] = "500 Error";
+}
+
+<div class="container">
+    <div class="card card-register mx-auto mt-5">
+        <div class="card-header">@ViewData["Title"]</div>
+        <div class="card-body">
+            <h1 class="text-danger">500 - Server error</h1>
+            <h3>This operation caused an error on our server.</h3>
+            <p>Sorry about it. Please try again and tell us about the problem.</p>
+        </div>
+        <a class="card-footer clearfix small z-1" href="@Values.WWWServerAddress">
+            <span class="float-left">Back to Aiursoft.com</span>
+            <span class="float-right">
+                <i class="fa fa-angle-right"></i>
+            </span>
+        </a>
+    </div>
+</div>
