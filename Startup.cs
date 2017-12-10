@@ -67,18 +67,6 @@ namespace Aiursoft.API
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, APIDbContext dbContext, DataCleaner dataCleaner)
         {
-            var SupportedCultures = new CultureInfo[]
-            {
-                new CultureInfo("en"),
-                new CultureInfo("zh")
-            };
-            app.UseRequestLocalization(new RequestLocalizationOptions
-            {
-                DefaultRequestCulture = new RequestCulture("en"),
-                SupportedCultures = SupportedCultures,
-                SupportedUICultures = SupportedCultures
-            });
-
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -88,6 +76,7 @@ namespace Aiursoft.API
             {
                 app.UseExceptionHandler("/Home/Error");
             }
+            app.UseAiursoftSupportedCultures();
             app.UseStaticFiles();
             app.UseAuthentication();
             app.UseMvcWithDefaultRoute();
