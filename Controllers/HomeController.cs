@@ -43,13 +43,11 @@ namespace Aiursoft.API.Controllers
             return Json(new IndexViewModel
             {
                 Signedin = User.Identity.IsAuthenticated,
-                UserId = cuser?.Id,
                 ServerTime = DateTime.Now,
-                UserName = cuser?.NickName,
-                UserImage = cuser?.HeadImgUrl,
                 code  = ErrorType.Success,
                 message = "Server started successfully!",
-                Local = _localizer["en"]
+                Local = _localizer["en"],
+                User = cuser
             });
         }
 

@@ -10,9 +10,7 @@ namespace Aiursoft.API.Models.HomeViewModels
     {
         public DateTime ServerTime { get; internal set; }
         public bool Signedin { get; internal set; }
-        public string UserId { get; internal set; }
-        public string UserImage { get; internal set; }
-        public string UserName { get; internal set; }
         public string Local { get; internal set; }
+        public APIUser User { get; set; }
     }
 }
