@@ -77,7 +77,10 @@ namespace Aiursoft.API.Controllers
             {
                 targetUser.HeadImgUrl = model.NewIconAddress;
             }
-
+            if (!string.IsNullOrEmpty(model.NewBio))
+            {
+                targetUser.Bio = model.NewBio;
+            }
             await _dbContext.SaveChangesAsync();
             return Json(new AiurProtocal { code = ErrorType.Success, message = "Successfully changed this user's nickname!" });
         }
