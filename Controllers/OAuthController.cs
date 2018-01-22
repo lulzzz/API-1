@@ -240,7 +240,7 @@ namespace Aiursoft.API.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new APIUser { UserName = model.Email, Email = model.Email, NickName = model.Email.Split('@')[0] };
+                var user = new APIUser { UserName = model.Email, Email = model.Email, NickName = model.Email.Split('@')[0], PreferedLanguage = "en" };
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
