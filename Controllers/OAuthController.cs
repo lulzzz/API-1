@@ -189,7 +189,7 @@ namespace Aiursoft.API.Controllers
             return Json(new AiurProtocal
             {
                 code = ErrorType.Unauthorized,
-                message = "Auth failed."
+                message = "Incorrect username or password."
             });
         }
 
