@@ -36,7 +36,7 @@ namespace Aiursoft.API
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<DeveloperDbContext>(options =>
+            services.AddDbContext<APIDbContext>(options =>
                 options.UseMySql(Configuration.GetConnectionString("DatabaseConnection")));
             emailPassword = Configuration["emailpassword"];
             if(string.IsNullOrWhiteSpace(emailPassword))
