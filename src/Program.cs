@@ -14,6 +14,7 @@ namespace Aiursoft.API
         {
             var host = WebHost.CreateDefaultBuilder(args)
                  .UseStartup<Startup>()
+                 .UseUrls("http://localhost:5001")
                  .Build();
 
             return host;
