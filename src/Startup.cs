@@ -15,6 +15,7 @@ using System.Globalization;
 using Microsoft.AspNetCore.Localization;
 using Aiursoft.Pylon;
 using Aiursoft.Pylon.Services;
+using Microsoft.AspNetCore.HttpOverrides;
 
 namespace Aiursoft.API
 {
