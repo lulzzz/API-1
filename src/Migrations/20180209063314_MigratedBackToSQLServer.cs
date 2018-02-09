@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Aiursoft.API.Migrations
 {
-    public partial class MigratedToMySQL : Migration
+    public partial class MigratedBackToSQLServer : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -14,7 +14,7 @@ namespace Aiursoft.API.Migrations
                 columns: table => new
                 {
                     AccessTokenId = table.Column<int>(nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     AliveTime = table.Column<TimeSpan>(nullable: false),
                     ApplyAppId = table.Column<string>(nullable: true),
                     CreateTime = table.Column<DateTime>(nullable: false),
@@ -75,7 +75,7 @@ namespace Aiursoft.API.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     ClaimType = table.Column<string>(nullable: true),
                     ClaimValue = table.Column<string>(nullable: true),
                     RoleId = table.Column<string>(nullable: false)
@@ -96,7 +96,7 @@ namespace Aiursoft.API.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     ClaimType = table.Column<string>(nullable: true),
                     ClaimValue = table.Column<string>(nullable: true),
                     UserId = table.Column<string>(nullable: false)
@@ -181,7 +181,7 @@ namespace Aiursoft.API.Migrations
                 columns: table => new
                 {
                     AppGrantId = table.Column<int>(nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     APIUserId = table.Column<string>(nullable: true),
                     AppID = table.Column<string>(nullable: true),
                     GrantTime = table.Column<DateTime>(nullable: false)
@@ -202,7 +202,7 @@ namespace Aiursoft.API.Migrations
                 columns: table => new
                 {
                     OAuthPackId = table.Column<int>(nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     AliveTime = table.Column<TimeSpan>(nullable: false),
                     ApplyAppId = table.Column<string>(nullable: true),
                     Code = table.Column<int>(nullable: false),
@@ -230,7 +230,8 @@ namespace Aiursoft.API.Migrations
                 name: "RoleNameIndex",
                 table: "AspNetRoles",
                 column: "NormalizedName",
-                unique: true);
+                unique: true,
+                filter: "[NormalizedName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetUserClaims_UserId",
@@ -256,7 +257,8 @@ namespace Aiursoft.API.Migrations
                 name: "UserNameIndex",
                 table: "AspNetUsers",
                 column: "NormalizedUserName",
-                unique: true);
+                unique: true,
+                filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_LocalAppGrant_APIUserId",

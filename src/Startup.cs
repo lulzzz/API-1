@@ -38,7 +38,7 @@ namespace Aiursoft.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<APIDbContext>(options =>
-                options.UseMySql(Configuration.GetConnectionString("DatabaseConnection")));
+                options.UseSqlServer(Configuration.GetConnectionString("DatabaseConnection")));
             emailPassword = Configuration["emailpassword"];
             if(string.IsNullOrWhiteSpace(emailPassword))
             {
@@ -69,10 +69,6 @@ namespace Aiursoft.API
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, APIDbContext dbContext, DataCleaner dataCleaner)
         {
-            app.UseForwardedHeaders(new ForwardedHeadersOptions
-            {
-                ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
-            });
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
