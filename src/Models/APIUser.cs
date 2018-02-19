@@ -19,7 +19,7 @@ namespace Aiursoft.API.Models
         public virtual List<OAuthPack> Packs { get; set; }
         [InverseProperty(nameof(AppGrant.User))]
         public virtual List<AppGrant> GrantedApps { get; set; }
-        public virtual Random _random { get; set; } = new Random();
+        //public virtual Random _random { get; set; } = new Random();
 
         public async virtual Task GrantTargetApp(APIDbContext dbContext, string appId)
         {
@@ -38,7 +38,7 @@ namespace Aiursoft.API.Models
         {
             var pack = new OAuthPack
             {
-                Code = (Id + DateTime.Now.ToString() + _random.Next()).GetHashCode(),
+                Code = Guid.NewGuid().GetHashCode(),// DateTime.Now.ToString() + _random.Next()).GetHashCode(),
                 UserId = Id,
                 ApplyAppId = appId
             };
