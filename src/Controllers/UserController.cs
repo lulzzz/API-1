@@ -112,6 +112,26 @@ namespace Aiursoft.API.Controllers
             }
         }
 
+        [ForceValidateModelState]
+        [ForceValidateAccessToken]
+        [AiurExceptionHandler]
+        public async Task<JsonResult> SetPhoneNumber(SetPhoneNumberAddressModel model)
+        {
+            var target = await _dbContext
+                .AccessToken
+                .SingleOrDefaultAsync(t=>t.Value == model.AccessToken);
+
+            var targetUser = await _dbContext.Users.FindAsync(model.OpenId);
+            if (!_dbContext.LocalAppGrant.Exists(t => t.AppID == target.ApplyAppId && t.APIUserId == targetUser.Id))
+            {
+                return Json(new AiurProtocal { code = ErrorType.Unauthorized, message = "This user did not grant your app!" });
+            }
+            targetUser.PhoneNumber = model.Phone;
+            targetUser.PhoneNumberConfirmed = true;
+            await _userManager.UpdateAsync(targetUser);
+            return Protocal(ErrorType.Success, "Successfully set the user's PhoneNumber!");
+        }
+
         [HttpGet]
         public IActionResult ForgotPassword()
         {
