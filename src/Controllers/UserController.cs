@@ -210,11 +210,18 @@ namespace Aiursoft.API.Controllers
             return View(model);
         }
 
-        public IActionResult EnterSMSCode(string Email)
+        public async Task<IActionResult> EnterSMSCode(string Email)
         {
+            var user = await _userManager.FindByEmailAsync(Email);
+            if(user == null || user.PhoneNumberConfirmed ==false)
+            {
+                return NotFound();
+            }
+            var phoneLast = user.PhoneNumber.Substring(user.PhoneNumber.Length - 4);
             var model = new EnterSMSCodeViewModel
             {
-                Email = Email
+                Email = Email,
+                PhoneLast = phoneLast
             };
             return View(model);
         }

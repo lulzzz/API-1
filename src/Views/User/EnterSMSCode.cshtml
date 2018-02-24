@@ -8,10 +8,11 @@
         <div class="card-body">
             <div class="text-center mt-4 mb-5">
                 <h4>@Localizer["Reset your password"]</h4>
+                <p>We have sent the verification code to `*******@Model.PhoneLast`.</p>
                 <p>Check your phone to get your password reset code.</p>
             </div>
             <form asp-controller="User" asp-action="EnterSMSCode" method="post">
-                <input type="hidden" asp-for="PhoneNumber" />
+                <input type="hidden" asp-for="Email" />
                 <div class="form-group">
                     <input type="text" asp-for="Code" class="form-control" placeholder="@Localizer["Enter your Code"]">
                 </div>

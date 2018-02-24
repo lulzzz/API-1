@@ -9,6 +9,7 @@ namespace Aiursoft.API.Models.UserViewModels
     public class EnterSMSCodeViewModel
     {
         public bool ModelStateValid { get; set; }
+        public string PhoneLast { get; set; }
         [Required]
         public string Code { get; set; }
         [Required]
