@@ -187,12 +187,15 @@ namespace Aiursoft.API.Controllers
                 var user = await _userManager.FindByEmailAsync(model.Email);
                 if (user == null)
                 {
-                    return RedirectToAction(nameof(ForgotPasswordSent));
+                    model.ModelStateValid = false;
+                    ModelState.AddModelError("", $"We can't find an account with email:`{model.Email}`!");
+                    return View(model);
                 }
                 if (user.PhoneNumberConfirmed == false)
                 {
                     model.ModelStateValid = false;
                     ModelState.AddModelError("", "Your account did not bind a valid phone number!");
+                    return View(model);
                 }
                 var code = StringOperation.RandomString(6);
                 user.SMSPasswordResetToken = code;
@@ -203,10 +206,14 @@ namespace Aiursoft.API.Controllers
             return View(model);
         }
 
-        //public async Task<IActionResult> EnterSMSCode(string Email)
-        //{
-
-        //}
+        public IActionResult EnterSMSCode(string Email)
+        {
+            var model = new EnterSMSCodeViewModel
+            {
+                Email = Email
+            };
+            return View(model);
+        }
         //[HttpPost]
         //public async Task<IActionResult> EnterSMSCode(EnterSMSCodeViewModel model)
         //{

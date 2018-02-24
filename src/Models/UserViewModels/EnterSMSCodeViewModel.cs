@@ -12,6 +12,6 @@ namespace Aiursoft.API.Models.UserViewModels
         [Required]
         public string Code { get; set; }
         [Required]
-        public string PhoneNumber { get; set; }
+        public string Email { get; set; }
     }
 }
