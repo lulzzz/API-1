@@ -62,6 +62,7 @@ namespace Aiursoft.API
 
             services.AddTransient<DataCleaner>();
             services.AddTransient<AiurEmailSender>();
+            services.AddTransient<AiurSMSSender>();
             services.AddMvc()
                 .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
                 .AddDataAnnotationsLocalization();
@@ -69,6 +70,9 @@ namespace Aiursoft.API
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, APIDbContext dbContext, DataCleaner dataCleaner)
         {
+            AiurSMSSender.SMSAccountFrom = Configuration["SMSAccountFrom"];
+            AiurSMSSender.SMSAccountIdentification = Configuration["SMSAccountIdentification"];
+            AiurSMSSender.SMSAccountPassword = Configuration["SMSAccountPassword"];
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

@@ -144,6 +144,12 @@ namespace Aiursoft.API.Controllers
             return View();
         }
 
+        [HttpGet]
+        public IActionResult ForgotPasswordViaSMS()
+        {
+            return View();
+        }
+
         [HttpPost]
         public async Task<IActionResult> ForgotPasswordViaEmail(ForgotPasswordViaEmailViewModel model)
         {
