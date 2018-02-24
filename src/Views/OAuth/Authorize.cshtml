@@ -25,10 +25,10 @@
                     <label asp-for="Password">@Localizer["Password"]</label>
                     <input class="form-control" type="password" asp-for="Password" placeholder="@Localizer["Password"]">
                     <a class="d-block small" asp-controller="User" asp-action="SelectPasswordMethod" target="_blank">
-                        Forgot Password?
+                        @Localizer["Forgot Password?"]
                     </a>
                 </div>
-                <button class="btn btn-primary btn-block" type="submit">Sign in</button>
+                <button class="btn btn-primary btn-block" type="submit">@Localizer["Sign in"]</button>
             </form>
         </div>
         <a class="card-footer clearfix small z-1" asp-controller="OAuth" asp-action="Register" asp-route-redirect_uri="@Model?.ToRedirect" asp-route-state="@Model?.State" asp-route-appid="@Model?.AppId" asp-route-scope="@Model?.Scope" asp-route-response_type="@Model?.ResponseType">
