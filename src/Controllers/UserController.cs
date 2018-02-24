@@ -144,11 +144,7 @@ namespace Aiursoft.API.Controllers
             return View();
         }
 
-        [HttpGet]
-        public IActionResult ForgotPasswordViaSMS()
-        {
-            return View();
-        }
+
 
         [HttpPost]
         public async Task<IActionResult> ForgotPasswordViaEmail(ForgotPasswordViaEmailViewModel model)
@@ -168,6 +164,34 @@ namespace Aiursoft.API.Controllers
                 });
                 await _emailSender.SendEmail(model.Email, "Reset Password", 
                     $"Please reset your password by clicking <a href='{callbackUrl}'>here</a>", Startup.emailPassword);
+                return RedirectToAction(nameof(ForgotPasswordSent));
+            }
+            return View(model);
+        }
+
+        [HttpGet]
+        public IActionResult ForgotPasswordViaSMS()
+        {
+            var model = new ForgotPasswordViaSMSViewModel();
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ForgotPasswordViaSMS(ForgotPasswordViaSMSViewModel model)
+        {
+            if(ModelState.IsValid)
+            {
+                var users = _dbContext.Users.Where(t => t.PhoneNumber == model.PhoneNumber);
+                if(await users.CountAsync() == 0)
+                {
+                    ModelState.AddModelError("", "Do not exist an account associated with your phone number!");
+                    model.ModelStateValid = false;
+                    return View(model);
+                }
+                var code = StringOperation.RandomString(6);
+                var user = await users.FirstAsync();
+                user.SMSPasswordResetToken = code;
+                await _userManager.UpdateAsync(user);
                 return RedirectToAction(nameof(ForgotPasswordSent));
             }
             return View(model);

@@ -19,6 +19,7 @@ namespace Aiursoft.API.Models
         public virtual List<OAuthPack> Packs { get; set; }
         [InverseProperty(nameof(AppGrant.User))]
         public virtual List<AppGrant> GrantedApps { get; set; }
+        public virtual string SMSPasswordResetToken { get; set; }
         //public virtual Random _random { get; set; } = new Random();
 
         public async virtual Task GrantTargetApp(APIDbContext dbContext, string appId)
