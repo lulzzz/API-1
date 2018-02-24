@@ -140,14 +140,12 @@ namespace Aiursoft.API.Controllers
         {
             return View();
         }
-
+        #region Forgot Password with email
         [HttpGet]
         public IActionResult ForgotPasswordViaEmail()
         {
             return View();
         }
-
-
 
         [HttpPost]
         public async Task<IActionResult> ForgotPasswordViaEmail(ForgotPasswordViaEmailViewModel model)
@@ -171,7 +169,13 @@ namespace Aiursoft.API.Controllers
             }
             return View(model);
         }
-
+        [HttpGet]
+        public IActionResult ForgotPasswordSent()
+        {
+            return View();
+        }
+        #endregion
+        #region Forgot Password with SMS
         [HttpGet]
         public IActionResult ForgotPasswordViaSMS()
         {
@@ -201,7 +205,7 @@ namespace Aiursoft.API.Controllers
                 user.SMSPasswordResetToken = code;
                 await _userManager.UpdateAsync(user);
                 await _smsSender.SendAsync(user.PhoneNumber, code + " is your Aiursoft password reset code.");
-                return RedirectToAction("", new { PhoneNumber = model.Email });
+                return RedirectToAction(nameof(EnterSMSCode), new { PhoneNumber = model.Email });
             }
             return View(model);
         }
@@ -235,13 +239,8 @@ namespace Aiursoft.API.Controllers
                 return View(model);
             }
         }
-
-        [HttpGet]
-        public IActionResult ForgotPasswordSent()
-        {
-            return View();
-        }
-
+        #endregion
+        #region Reset password
         [HttpGet]
         public IActionResult ResetPassword(string code = null)
         {
@@ -281,7 +280,8 @@ namespace Aiursoft.API.Controllers
         public IActionResult ResetPasswordConfirmation()
         {
             return View();
-        }
+        } 
+        #endregion
 
         private void AddErrors(IdentityResult result)
         {
