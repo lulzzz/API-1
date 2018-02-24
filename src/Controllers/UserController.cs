@@ -214,29 +214,27 @@ namespace Aiursoft.API.Controllers
             };
             return View(model);
         }
-        //[HttpPost]
-        //public async Task<IActionResult> EnterSMSCode(EnterSMSCodeViewModel model)
-        //{
-        //    if (!ModelState.IsValid)
-        //    {
-        //        model.ModelStateValid = false;
-        //        return View(model);
-        //    }
-        //    var users = _dbContext.Users.Where(t => t.PhoneNumber == model.PhoneNumber);
-        //    if (await users.CountAsync() == 0)
-        //    {
-        //        return NotFound();
-        //    }
-        //    var user = await users.FirstAsync();
-        //    if (user.SMSPasswordResetToken == model.Code)
-        //    {
-        //        var token = _userManager.GeneratePasswordResetTokenAsync(user);
-        //    }
-        //    else
-        //    {
-
-        //    }
-        //}
+        [HttpPost]
+        public async Task<IActionResult> EnterSMSCode(EnterSMSCodeViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                model.ModelStateValid = false;
+                return View(model);
+            }
+            var user = await _userManager.FindByEmailAsync(model.Email);
+            if (user.SMSPasswordResetToken == model.Code)
+            {
+                var token = _userManager.GeneratePasswordResetTokenAsync(user);
+                return RedirectToAction(nameof(ResetPassword), new { code = token });
+            }
+            else
+            {
+                model.ModelStateValid = false;
+                ModelState.AddModelError("", "Your code is not correct!");
+                return View(model);
+            }
+        }
 
         [HttpGet]
         public IActionResult ForgotPasswordSent()
