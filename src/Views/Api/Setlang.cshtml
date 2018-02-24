@@ -7,7 +7,7 @@
     <div class="card card-login mx-auto mt-5">
         <div class="card-header">@Localizer["Change Language"]</div>
         <div class="card-body">
-            <p>Click the following language you are speaking:</p>
+            <p>@Localizer["Click the language you are speaking:"]</p>
             <form asp-controller="api" asp-action="setlang" method="post">
                 <input type="hidden" name="culture" value="zh" />
                 <input type="hidden" name="Host" value="@Model.Host" />

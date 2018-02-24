@@ -120,6 +120,9 @@
   <data name="Change Language:" xml:space="preserve">
     <value>修改语言为:</value>
   </data>
+  <data name="Click the language you are speaking:" xml:space="preserve">
+    <value>请点击你阅读的语言</value>
+  </data>
   <data name="Set Language" xml:space="preserve">
     <value>设置语言</value>
   </data>

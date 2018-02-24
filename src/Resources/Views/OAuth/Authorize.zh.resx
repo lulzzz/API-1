@@ -147,4 +147,7 @@
   <data name="Sign Up" xml:space="preserve">
     <value>注册</value>
   </data>
+  <data name="Login to" xml:space="preserve">
+    <value>登录到</value>
+  </data>
 </root>

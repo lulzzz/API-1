@@ -52,6 +52,9 @@
     <EmbeddedResource Update="Resources\Views\User\ResetPassword.zh.resx">
       <Generator>ResXFileCodeGenerator</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Views\User\ResetPasswordConfirmation.zh.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="Resources\Views\User\SelectPasswordMethod.zh.resx">
       <Generator>ResXFileCodeGenerator</Generator>
     </EmbeddedResource>
