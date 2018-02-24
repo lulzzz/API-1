@@ -22,6 +22,7 @@
                 <input type="hidden" asp-for="Email" />
                 <div class="form-group">
                     <input type="text" asp-for="Code" class="form-control" placeholder="@Localizer["Enter your Code"]">
+                    <span asp-validation-for="Code" class="text-danger"></span>
                 </div>
                 <button class="btn btn-primary btn-block" type="submit">Check code</button>
             </form>

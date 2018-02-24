@@ -236,13 +236,15 @@ namespace Aiursoft.API.Controllers
             var user = await _userManager.FindByEmailAsync(model.Email);
             if (user.SMSPasswordResetToken.ToLower().Trim() == model.Code.ToLower().Trim())
             {
-                var token = _userManager.GeneratePasswordResetTokenAsync(user);
+                user.SMSPasswordResetToken = string.Empty;
+                await _userManager.UpdateAsync(user);
+                var token = await _userManager.GeneratePasswordResetTokenAsync(user);
                 return RedirectToAction(nameof(ResetPassword), new { code = token });
             }
             else
             {
                 model.ModelStateValid = false;
-                ModelState.AddModelError("", "Your code is not correct!");
+                ModelState.AddModelError("", "Your code is not correct and we can't help you reset your password!");
                 return View(model);
             }
         }
