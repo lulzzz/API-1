@@ -36,6 +36,7 @@ namespace Aiursoft.API.Controllers
         public readonly APIDbContext _dbContext;
         private readonly IStringLocalizer<ApiController> _localizer;
         private readonly AiurEmailSender _emailSender;
+        private readonly AiurSMSSender _smsSender;
 
 
         public UserController(
@@ -44,7 +45,8 @@ namespace Aiursoft.API.Controllers
             ILoggerFactory loggerFactory,
             APIDbContext _context,
             IStringLocalizer<ApiController> localizer,
-            AiurEmailSender emailSender)
+            AiurEmailSender emailSender,
+            AiurSMSSender smsSender)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -52,6 +54,7 @@ namespace Aiursoft.API.Controllers
             _dbContext = _context;
             _localizer = localizer;
             _emailSender = emailSender;
+            _smsSender = smsSender;
         }
 
         [ForceValidateModelState]
@@ -119,7 +122,7 @@ namespace Aiursoft.API.Controllers
         {
             var target = await _dbContext
                 .AccessToken
-                .SingleOrDefaultAsync(t=>t.Value == model.AccessToken);
+                .SingleOrDefaultAsync(t => t.Value == model.AccessToken);
 
             var targetUser = await _dbContext.Users.FindAsync(model.OpenId);
             if (!_dbContext.LocalAppGrant.Exists(t => t.AppID == target.ApplyAppId && t.APIUserId == targetUser.Id))
@@ -162,7 +165,7 @@ namespace Aiursoft.API.Controllers
                     code = code,
                     userId = user.Id
                 });
-                await _emailSender.SendEmail(model.Email, "Reset Password", 
+                await _emailSender.SendEmail(model.Email, "Reset Password",
                     $"Please reset your password by clicking <a href='{callbackUrl}'>here</a>", Startup.emailPassword);
                 return RedirectToAction(nameof(ForgotPasswordSent));
             }
@@ -172,30 +175,61 @@ namespace Aiursoft.API.Controllers
         [HttpGet]
         public IActionResult ForgotPasswordViaSMS()
         {
-            var model = new ForgotPasswordViaSMSViewModel();
+            var model = new ForgotPasswordViaEmailViewModel();
             return View(model);
         }
 
         [HttpPost]
-        public async Task<IActionResult> ForgotPasswordViaSMS(ForgotPasswordViaSMSViewModel model)
+        public async Task<IActionResult> ForgotPasswordViaSMS(ForgotPasswordViaEmailViewModel model)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-                var users = _dbContext.Users.Where(t => t.PhoneNumber == model.PhoneNumber);
-                if(await users.CountAsync() == 0)
+                var user = await _userManager.FindByEmailAsync(model.Email);
+                if (user == null)
                 {
-                    ModelState.AddModelError("", "Do not exist an account associated with your phone number!");
+                    return RedirectToAction(nameof(ForgotPasswordSent));
+                }
+                if (user.PhoneNumberConfirmed == false)
+                {
                     model.ModelStateValid = false;
-                    return View(model);
+                    ModelState.AddModelError("", "Your account did not bind a valid phone number!");
                 }
                 var code = StringOperation.RandomString(6);
-                var user = await users.FirstAsync();
                 user.SMSPasswordResetToken = code;
                 await _userManager.UpdateAsync(user);
-                return RedirectToAction(nameof(ForgotPasswordSent));
+                await _smsSender.SendAsync(user.PhoneNumber, code + " is your Aiursoft password reset code.");
+                return RedirectToAction("", new { PhoneNumber = model.Email });
             }
             return View(model);
         }
+
+        //public async Task<IActionResult> EnterSMSCode(string Email)
+        //{
+
+        //}
+        //[HttpPost]
+        //public async Task<IActionResult> EnterSMSCode(EnterSMSCodeViewModel model)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        model.ModelStateValid = false;
+        //        return View(model);
+        //    }
+        //    var users = _dbContext.Users.Where(t => t.PhoneNumber == model.PhoneNumber);
+        //    if (await users.CountAsync() == 0)
+        //    {
+        //        return NotFound();
+        //    }
+        //    var user = await users.FirstAsync();
+        //    if (user.SMSPasswordResetToken == model.Code)
+        //    {
+        //        var token = _userManager.GeneratePasswordResetTokenAsync(user);
+        //    }
+        //    else
+        //    {
+
+        //    }
+        //}
 
         [HttpGet]
         public IActionResult ForgotPasswordSent()

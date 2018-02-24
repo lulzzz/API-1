@@ -6,10 +6,12 @@ using System.Threading.Tasks;
 
 namespace Aiursoft.API.Models.UserViewModels
 {
-    public class ForgotPasswordViaEmailViewModel
+    public class EnterSMSCodeViewModel
     {
-        public bool ModelStateValid { get; set; } = true;
+        public bool ModelStateValid { get; set; }
         [Required]
-        public string Email { get; set; }
+        public string Code { get; set; }
+        [Required]
+        public string PhoneNumber { get; set; }
     }
 }
