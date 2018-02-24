@@ -205,7 +205,7 @@ namespace Aiursoft.API.Controllers
                 user.SMSPasswordResetToken = code;
                 await _userManager.UpdateAsync(user);
                 await _smsSender.SendAsync(user.PhoneNumber, code + " is your Aiursoft password reset code.");
-                return RedirectToAction(nameof(EnterSMSCode), new { PhoneNumber = model.Email });
+                return RedirectToAction(nameof(EnterSMSCode), new { Email = model.Email });
             }
             return View(model);
         }
@@ -234,7 +234,7 @@ namespace Aiursoft.API.Controllers
                 return View(model);
             }
             var user = await _userManager.FindByEmailAsync(model.Email);
-            if (user.SMSPasswordResetToken == model.Code)
+            if (user.SMSPasswordResetToken.ToLower().Trim() == model.Code.ToLower().Trim())
             {
                 var token = _userManager.GeneratePasswordResetTokenAsync(user);
                 return RedirectToAction(nameof(ResetPassword), new { code = token });
