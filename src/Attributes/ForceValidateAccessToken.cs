@@ -14,14 +14,14 @@ namespace Aiursoft.API.Attributes
 {
     public class ForceValidateAccessToken : ActionFilterAttribute
     {
-        public override async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
+        public override void OnActionExecuting(ActionExecutingContext context)
         {
             base.OnActionExecuting(context);
             var controller = context.Controller as UserController;
             var accessToken = context.HttpContext.Request.Query[nameof(WithAccessTokenAddressModel.AccessToken)].ToString();
-            var target = await controller._dbContext
+            var target = controller._dbContext
                 .AccessToken
-                .SingleOrDefaultAsync(t => t.Value == accessToken);
+                .SingleOrDefault(t => t.Value == accessToken);
 
             if (target == null)
             {
@@ -41,35 +41,6 @@ namespace Aiursoft.API.Attributes
                 };
                 context.Result = new JsonResult(arg);
             }
-            //return base.OnActionExecutionAsync(context, next);
         }
-        //public override void OnActionExecuting(ActionExecutingContext context)
-        //{
-        //    base.OnActionExecuting(context);
-        //    var controller = context.Controller as UserController;
-        //    var accessToken = context.HttpContext.Request.Query[nameof(WithAccessTokenAddressModel.AccessToken)].ToString();
-        //    var target = controller._dbContext
-        //        .AccessToken
-        //        .SingleOrDefault(t => t.Value == accessToken);
-
-        //    if (target == null)
-        //    {
-        //        var arg = new AiurProtocal
-        //        {
-        //            code = ErrorType.Unauthorized,
-        //            message = "We can not validate your access token!"
-        //        };
-        //        context.Result = new JsonResult(arg);
-        //    }
-        //    else if (!target.IsAlive)
-        //    {
-        //        var arg = new AiurProtocal
-        //        {
-        //            code = ErrorType.Unauthorized,
-        //            message = "Your access token is already Timeout!"
-        //        };
-        //        context.Result = new JsonResult(arg);
-        //    }
-        //}
     }
 }
