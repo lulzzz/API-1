@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Aiursoft.API.Models.UserViewModels
 {
-    public class ForgotPasswordViewModel
+    public class ForgotPasswordViaEmailViewModel
     {
         [Required]
         public string Email { get; set; }

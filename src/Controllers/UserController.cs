@@ -133,13 +133,19 @@ namespace Aiursoft.API.Controllers
         }
 
         [HttpGet]
-        public IActionResult ForgotPassword()
+        public IActionResult SelectPasswordMethod()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult ForgotPasswordViaEmail()
         {
             return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> ForgotPassword(ForgotPasswordViewModel model)
+        public async Task<IActionResult> ForgotPasswordViaEmail(ForgotPasswordViaEmailViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -172,7 +178,7 @@ namespace Aiursoft.API.Controllers
         {
             if (code == null)
             {
-                return RedirectToAction(nameof(ForgotPassword));
+                return RedirectToAction(nameof(SelectPasswordMethod));
             }
             var model = new ResetPasswordViewModel
             {
