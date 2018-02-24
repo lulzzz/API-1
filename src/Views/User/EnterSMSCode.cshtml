@@ -4,12 +4,12 @@
 }
 <div class="container">
     <div class="card card-login mx-auto mt-5">
-        <div class="card-header">@Localizer["Reset your password"]</div>
+        <div class="card-header">@Localizer["Enter code"]</div>
         <div class="card-body">
             <div class="text-center mt-4 mb-5">
-                <h4>@Localizer["Reset your password"]</h4>
-                <p>We have sent the verification code to `*******@Model.PhoneLast`.</p>
-                <p>Check your phone to get your password reset code.</p>
+                <h4>@Localizer["Enter code"]</h4>
+                <p>@Localizer["We have sent the verification code to"] `*******@Model.PhoneLast`.</p>
+                <p>@Localizer["Check your phone to get your password reset code."]</p>
             </div>
             @if (!Model.ModelStateValid)
             {
@@ -24,7 +24,7 @@
                     <input type="text" asp-for="Code" class="form-control" placeholder="@Localizer["Enter your Code"]">
                     <span asp-validation-for="Code" class="text-danger"></span>
                 </div>
-                <button class="btn btn-primary btn-block" type="submit">Check code</button>
+                <button class="btn btn-primary btn-block" type="submit">@Localizer["Check code"]</button>
             </form>
         </div>
     </div>

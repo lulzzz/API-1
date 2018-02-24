@@ -117,16 +117,19 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Enter your email address" xml:space="preserve">
-    <value>你的邮箱地址</value>
+  <data name="Check code" xml:space="preserve">
+    <value>检查代码</value>
   </data>
-  <data name="Enter your email address and we will send you a link to reset your password." xml:space="preserve">
-    <value>输入你的邮箱地址，我们会向它发送一个链接来重置密码。</value>
+  <data name="Check your phone to get your password reset code." xml:space="preserve">
+    <value>请检查你的手机来获取密码重置代码。</value>
   </data>
-  <data name="Reset Password" xml:space="preserve">
-    <value>重置密码</value>
+  <data name="Enter code" xml:space="preserve">
+    <value>输入代码</value>
   </data>
-  <data name="Reset password via Email" xml:space="preserve">
-    <value>通过邮件重置密码</value>
+  <data name="Enter your Code" xml:space="preserve">
+    <value>输入密码重置代码</value>
+  </data>
+  <data name="We have sent the verification code to" xml:space="preserve">
+    <value>我们已经把验证代码发送到了</value>
   </data>
 </root>
