@@ -129,7 +129,7 @@ namespace Aiursoft.API.Controllers
             {
                 return Json(new AiurProtocal { code = ErrorType.Unauthorized, message = "This user did not grant your app!" });
             }
-            if (string.IsNullOrEmpty(model.Phone))
+            if (string.IsNullOrWhiteSpace(model.Phone))
             {
                 targetUser.PhoneNumber = string.Empty;
             }
