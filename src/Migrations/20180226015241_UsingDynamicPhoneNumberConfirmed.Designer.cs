@@ -11,9 +11,10 @@ using System;
 namespace Aiursoft.API.Migrations
 {
     [DbContext(typeof(APIDbContext))]
-    partial class APIDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180226015241_UsingDynamicPhoneNumberConfirmed")]
+    partial class UsingDynamicPhoneNumberConfirmed
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

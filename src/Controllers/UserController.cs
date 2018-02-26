@@ -129,8 +129,14 @@ namespace Aiursoft.API.Controllers
             {
                 return Json(new AiurProtocal { code = ErrorType.Unauthorized, message = "This user did not grant your app!" });
             }
-            targetUser.PhoneNumber = model.Phone;
-            targetUser.PhoneNumberConfirmed = true;
+            if (string.IsNullOrEmpty(model.Phone))
+            {
+                targetUser.PhoneNumber = string.Empty;
+            }
+            else
+            {
+                targetUser.PhoneNumber = model.Phone;
+            }
             await _userManager.UpdateAsync(targetUser);
             return Protocal(ErrorType.Success, "Successfully set the user's PhoneNumber!");
         }
@@ -140,6 +146,7 @@ namespace Aiursoft.API.Controllers
         {
             return View();
         }
+
         #region Forgot Password with email
         [HttpGet]
         public IActionResult ForgotPasswordViaEmail()
@@ -213,7 +220,7 @@ namespace Aiursoft.API.Controllers
         public async Task<IActionResult> EnterSMSCode(string Email)
         {
             var user = await _userManager.FindByEmailAsync(Email);
-            if(user == null || user.PhoneNumberConfirmed ==false)
+            if (user == null || user.PhoneNumberConfirmed == false)
             {
                 return NotFound();
             }
@@ -289,7 +296,7 @@ namespace Aiursoft.API.Controllers
         public IActionResult ResetPasswordConfirmation()
         {
             return View();
-        } 
+        }
         #endregion
 
         private void AddErrors(IdentityResult result)
