@@ -82,6 +82,7 @@ namespace Aiursoft.API
             {
                 app.UseExceptionHandler("/Home/Error");
             }
+            app.UseResponseCompression();
             app.UseAiursoftSupportedCultures();
             app.UseStaticFiles();
             app.UseAuthentication();
