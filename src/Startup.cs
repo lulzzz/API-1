@@ -68,7 +68,7 @@ namespace Aiursoft.API
                 .AddDataAnnotationsLocalization();
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, APIDbContext dbContext, TimedCleaner dataCleaner)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, APIDbContext dbContext)
         {
             AiurSMSSender.SMSAccountFrom = Configuration["SMSAccountFrom"];
             AiurSMSSender.SMSAccountIdentification = Configuration["SMSAccountIdentification"];
