@@ -16,6 +16,7 @@ using Microsoft.AspNetCore.Localization;
 using Aiursoft.Pylon;
 using Aiursoft.Pylon.Services;
 using Microsoft.AspNetCore.HttpOverrides;
+using Microsoft.Extensions.Hosting;
 
 namespace Aiursoft.API
 {
@@ -59,8 +60,7 @@ namespace Aiursoft.API
 
             services
                 .AddLocalization(options => options.ResourcesPath = "Resources");
-
-            services.AddTransient<DataCleaner>();
+            services.AddSingleton<IHostedService, TimedCleaner>();
             services.AddTransient<AiurEmailSender>();
             services.AddTransient<AiurSMSSender>();
             services.AddMvc()
@@ -68,7 +68,7 @@ namespace Aiursoft.API
                 .AddDataAnnotationsLocalization();
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, APIDbContext dbContext, DataCleaner dataCleaner)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, APIDbContext dbContext, TimedCleaner dataCleaner)
         {
             AiurSMSSender.SMSAccountFrom = Configuration["SMSAccountFrom"];
             AiurSMSSender.SMSAccountIdentification = Configuration["SMSAccountIdentification"];
@@ -86,7 +86,6 @@ namespace Aiursoft.API
             app.UseStaticFiles();
             app.UseAuthentication();
             app.UseMvcWithDefaultRoute();
-            dataCleaner.StartCleanerService().Wait();
         }
     }
 }
