@@ -4,33 +4,15 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" href="~/favicon.ico">
     <title>@ViewData["Title"] - @Values.ProjectName</title>
-
-    <environment names="Development">
-        <link href="@Values.CdnServerAddress/node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-        <link href="@Values.CdnServerAddress/node_modules/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-        <link href="@Values.CdnServerAddress/node_modules/startbootstrap-sb-admin/css/sb-admin.css" rel="stylesheet" />
-        <link href="@Values.CdnServerAddress/css/OAuthUI.css" rel="stylesheet" />
-    </environment>
-    <environment names="Staging,Production">
-        <link href="@Values.CdnServerAddress/dist/OAuthUI.min.css" rel="stylesheet" asp-append-version="true">
-    </environment>
+    <link rel="icon" type="image/x-icon" href="@Values.CdnServerAddress/favicon.ico">
+    <link href="@Values.CdnServerAddress/dist/AiurCore.min.css" rel="stylesheet">
+    <link href="@Values.CdnServerAddress/dist/AiurDashboard.min.css" rel="stylesheet">
 </head>
 <body class="bg-dark lines">
     @RenderBody()
-    <environment names="Development">
-        <script src="@Values.CdnServerAddress/node_modules/jquery/dist/jquery.min.js"></script>
-        <script src="@Values.CdnServerAddress/node_modules/popper.js/dist/umd/popper.min.js"></script>
-        <script src="@Values.CdnServerAddress/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
-        <script src="@Values.CdnServerAddress/node_modules/jquery-validation/dist/jquery.validate.js"></script>
-        <script src="@Values.CdnServerAddress/node_modules/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
-        <script src="@Values.CdnServerAddress/js/OAuthUI.js" asp-append-version="true"></script>
-    </environment>
-    <environment names="Staging,Production">
-        <script src="@Values.CdnServerAddress/dist/OAuthUI.min.js" asp-append-version="true"></script>
-    </environment>
-
-@RenderSection("scripts", required: false)
+    <script src="@Values.CdnServerAddress/dist/AiurCore.min.js"></script>
+    <script src="@Values.CdnServerAddress/dist/AiurDashboard.min.js"></script>
+    @RenderSection("scripts", required: false)
 </body>
 </html>
