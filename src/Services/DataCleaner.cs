@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Aiursoft.API.Data;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Aiursoft.Pylon.Services;
 
 namespace Aiursoft.API.Services
 {
@@ -32,9 +33,33 @@ namespace Aiursoft.API.Services
 
         private async void DoWork(object state)
         {
-            await TimeoutCleaner.AllClean(_dbContext);
+            await AllClean(_dbContext);
+        }
+        public async Task AllClean(APIDbContext _dbContext)
+        {
+            try
+            {
+                await ClearTimeOutAccessToken(_dbContext);
+                await ClearTimeOutOAuthPack(_dbContext);
+                _logger.LogInformation("Clean finished!");
+            }
+            catch (Exception e)
+            {
+                _logger.LogCritical(e.Message);
+            }
+        }
+        public Task ClearTimeOutAccessToken(APIDbContext _dbContext)
+        {
+            _dbContext.AccessToken.Delete(t => !t.IsAlive);
+            return _dbContext.SaveChangesAsync();
         }
 
+        public Task ClearTimeOutOAuthPack(APIDbContext _dbContext)
+        {
+            _dbContext.OAuthPack.Delete(t => t.IsUsed == true);
+            _dbContext.OAuthPack.Delete(t => !t.IsAlive);
+            return _dbContext.SaveChangesAsync();
+        }
         public Task StopAsync(CancellationToken cancellationToken)
         {
             _logger.LogInformation("Timed Background Service is stopping.");
