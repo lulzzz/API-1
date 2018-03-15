@@ -22,7 +22,6 @@ using Aiursoft.Pylon.Attributes;
 
 namespace Aiursoft.API.Controllers
 {
-    [AiurRequireHttps]
     [ForceValidateModelState]
     public class OAuthController : AiurController
     {

@@ -14,7 +14,6 @@ using Microsoft.Extensions.Localization;
 
 namespace Aiursoft.API.Controllers
 {
-    [AiurRequireHttps]
     public class HomeController : AiurController
     {
         private readonly UserManager<APIUser> _userManager;

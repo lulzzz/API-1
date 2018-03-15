@@ -24,16 +24,10 @@ namespace Aiursoft.API
     {
         public IConfiguration Configuration { get; }
         public static string emailPassword { get; private set; }
-        public bool IsDevelopment { get; set; }
 
         public Startup(IConfiguration configuration, IHostingEnvironment env)
         {
             Configuration = configuration;
-            IsDevelopment = env.IsDevelopment();
-            if (IsDevelopment)
-            {
-                Values.ForceRequestHttps = false;
-            }
         }
 
         public void ConfigureServices(IServiceCollection services)
@@ -81,6 +75,7 @@ namespace Aiursoft.API
             else
             {
                 app.UseExceptionHandler("/Home/Error");
+                app.UseEnforceHttps();
             }
             app.UseAiursoftSupportedCultures();
             app.UseStaticFiles();
