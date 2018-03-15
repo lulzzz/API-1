@@ -23,7 +23,7 @@ using Aiursoft.Pylon.Attributes;
 namespace Aiursoft.API.Controllers
 {
     [ForceValidateModelState]
-    public class OAuthController : AiurController
+    public class OAuthController : Controller
     {
         private readonly UserManager<APIUser> _userManager;
         private readonly SignInManager<APIUser> _signInManager;
@@ -243,13 +243,13 @@ namespace Aiursoft.API.Controllers
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    return Protocal(ErrorType.Success, "Successfully created your account.");
+                    return this.Protocal(ErrorType.Success, "Successfully created your account.");
                 }
-                return Protocal(ErrorType.NotEnoughResources, result.Errors.First().Description);
+                return this.Protocal(ErrorType.NotEnoughResources, result.Errors.First().Description);
             }
             else
             {
-                return Protocal(ErrorType.InvalidInput, "Invalid input!");
+                return this.Protocal(ErrorType.InvalidInput, "Invalid input!");
             }
         }
 

@@ -27,7 +27,7 @@ using Aiursoft.API.Models.UserViewModels;
 
 namespace Aiursoft.API.Controllers
 {
-    public class UserController : AiurController
+    public class UserController : Controller
     {
         private readonly UserManager<APIUser> _userManager;
         private readonly SignInManager<APIUser> _signInManager;
@@ -137,7 +137,7 @@ namespace Aiursoft.API.Controllers
                 targetUser.PhoneNumber = model.Phone;
             }
             await _userManager.UpdateAsync(targetUser);
-            return Protocal(ErrorType.Success, "Successfully set the user's PhoneNumber!");
+            return this.Protocal(ErrorType.Success, "Successfully set the user's PhoneNumber!");
         }
 
         [HttpGet]

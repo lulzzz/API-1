@@ -14,7 +14,7 @@ using Microsoft.Extensions.Localization;
 
 namespace Aiursoft.API.Controllers
 {
-    public class HomeController : AiurController
+    public class HomeController : Controller
     {
         private readonly UserManager<APIUser> _userManager;
         private readonly SignInManager<APIUser> _signInManager;
