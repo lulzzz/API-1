@@ -25,7 +25,7 @@ using Aiursoft.API.Models.ApiViewModels;
 
 namespace Aiursoft.API.Controllers
 {
-    public class ApiController : AiurApiController
+    public class ApiController : Controller
     {
         private readonly UserManager<APIUser> _userManager;
         private readonly SignInManager<APIUser> _signInManager;

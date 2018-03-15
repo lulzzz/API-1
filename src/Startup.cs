@@ -80,6 +80,7 @@ namespace Aiursoft.API
             app.UseAiursoftSupportedCultures();
             app.UseStaticFiles();
             app.UseAuthentication();
+            app.UseLanguageSwitcher();
             app.UseMvcWithDefaultRoute();
         }
     }
