@@ -24,6 +24,7 @@ using Aiursoft.Pylon.Models.API;
 using Aiursoft.Pylon.Models.API.UserAddressModels;
 using Aiursoft.API.Attributes;
 using Aiursoft.API.Models.UserViewModels;
+using Microsoft.Extensions.Configuration;
 
 namespace Aiursoft.API.Controllers
 {
@@ -36,6 +37,7 @@ namespace Aiursoft.API.Controllers
         private readonly IStringLocalizer<ApiController> _localizer;
         private readonly AiurEmailSender _emailSender;
         private readonly AiurSMSSender _smsSender;
+        private readonly IConfiguration _configuration;
 
 
         public UserController(
@@ -45,7 +47,8 @@ namespace Aiursoft.API.Controllers
             APIDbContext _context,
             IStringLocalizer<ApiController> localizer,
             AiurEmailSender emailSender,
-            AiurSMSSender smsSender)
+            AiurSMSSender smsSender,
+            IConfiguration configuration)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -54,6 +57,7 @@ namespace Aiursoft.API.Controllers
             _localizer = localizer;
             _emailSender = emailSender;
             _smsSender = smsSender;
+            _configuration = configuration;
         }
 
         [ForceValidateModelState]
@@ -170,7 +174,7 @@ namespace Aiursoft.API.Controllers
                     userId = user.Id
                 });
                 await _emailSender.SendEmail(model.Email, "Reset Password",
-                    $"Please reset your password by clicking <a href='{callbackUrl}'>here</a>", Startup.emailPassword);
+                    $"Please reset your password by clicking <a href='{callbackUrl}'>here</a>", _configuration["emailpassword"]);
                 return RedirectToAction(nameof(ForgotPasswordSent));
             }
             return View(model);

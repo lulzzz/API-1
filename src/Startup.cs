@@ -23,7 +23,6 @@ namespace Aiursoft.API
     public class Startup
     {
         public IConfiguration Configuration { get; }
-        public static string emailPassword { get; private set; }
 
         public Startup(IConfiguration configuration, IHostingEnvironment env)
         {
@@ -35,15 +34,7 @@ namespace Aiursoft.API
             services.AddDbContext<APIDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DatabaseConnection")));
 
-            services.AddIdentity<APIUser, IdentityRole>(options =>
-                options.Password = new PasswordOptions
-                {
-                    RequireDigit = false,
-                    RequiredLength = 6,
-                    RequireLowercase = false,
-                    RequireUppercase = false,
-                    RequireNonAlphanumeric = false
-                })
+            services.AddIdentity<APIUser, IdentityRole>(options => options.Password = Values.PasswordOptions)
                 .AddEntityFrameworkStores<APIDbContext>()
                 .AddDefaultTokenProviders();
 
@@ -59,14 +50,6 @@ namespace Aiursoft.API
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, APIDbContext dbContext)
         {
-            AiurSMSSender.SMSAccountFrom = Configuration["SMSAccountFrom"];
-            AiurSMSSender.SMSAccountIdentification = Configuration["SMSAccountIdentification"];
-            AiurSMSSender.SMSAccountPassword = Configuration["SMSAccountPassword"];
-            emailPassword = Configuration["emailpassword"];
-            if (string.IsNullOrWhiteSpace(emailPassword))
-            {
-                throw new InvalidOperationException("Did not get email password from configuration!");
-            }
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
