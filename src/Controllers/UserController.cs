@@ -187,6 +187,36 @@ namespace Aiursoft.API.Controllers
             return this.Protocal(ErrorType.Success, "Successfully set the user's PhoneNumber!");
         }
 
+        [HttpPost]
+        [ForceValidateModelState]
+        [ForceValidateAccessToken]
+        [AiurExceptionHandler]
+        public async Task<IActionResult> VerifyEmail(VerifyEmailAddressModel model)
+        {
+            var accessToken = await _dbContext
+                .AccessToken
+                .SingleOrDefaultAsync(t => t.Value == model.AccessToken);
+
+            var app = await ApiService.AppInfoAsync(accessToken.ApplyAppId);
+            var targetUser = await _dbContext.Users.FindAsync(model.OpenId);
+            if (targetUser == null)
+            {
+                return this.Protocal(ErrorType.NotFound, "Could not find target user.");
+            }
+            if (!_dbContext.LocalAppGrant.Exists(t => t.AppID == accessToken.ApplyAppId && t.APIUserId == targetUser.Id))
+            {
+                return Json(new AiurProtocal { code = ErrorType.Unauthorized, message = "This user did not grant your app!" });
+            }
+            if (!app.App.ConfirmEmail)
+            {
+                return this.Protocal(ErrorType.Unauthorized, "You app is not allowed to set users' email confirmation status.");
+            }
+            targetUser.EmailConfirmed = model.Verified;
+            await _userManager.UpdateAsync(targetUser);
+            return this.Protocal(ErrorType.Success, "Successfully set the user's PhoneNumber!");
+            throw new NotImplementedException();
+        }
+
         [HttpGet]
         public IActionResult SelectPasswordMethod()
         {
