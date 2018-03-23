@@ -13,6 +13,7 @@ using Aiursoft.Pylon.Models.API;
 namespace Aiursoft.API.Models
 {
     // Add profile data for application users by adding properties to the ApplicationUser class
+    [JsonObject(MemberSerialization.OptIn)]
     public class APIUser : AiurUserBase
     {
         [InverseProperty(nameof(OAuthPack.User))]
@@ -20,7 +21,6 @@ namespace Aiursoft.API.Models
         [InverseProperty(nameof(AppGrant.User))]
         public virtual List<AppGrant> GrantedApps { get; set; }
         public virtual string SMSPasswordResetToken { get; set; }
-        //public virtual Random _random { get; set; } = new Random();
 
         public async virtual Task GrantTargetApp(APIDbContext dbContext, string appId)
         {

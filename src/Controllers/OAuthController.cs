@@ -293,7 +293,11 @@ namespace Aiursoft.API.Controllers
             {
                 return Json(new AiurProtocal { message = "The app granted code is not the app granting access token!", code = ErrorType.Unauthorized });
             }
-
+            var capp = (await ApiService.AppInfoAsync(targetPack.ApplyAppId)).App;
+            if (!capp.ViewOpenId)
+            {
+                return this.Protocal(ErrorType.Unauthorized, "The app doesn't have view open id permission.");
+            }
             targetPack.IsUsed = true;
             await _dbContext.SaveChangesAsync();
             var viewModel = new CodeToOpenIdViewModel
