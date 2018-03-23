@@ -31,7 +31,7 @@
 
                     <input class="form-control" type="password" asp-for="Password" placeholder="@Localizer["Password"]">
                 </div>
-                <button class="btn btn-success btn-block" type="submit">@Localizer["Sign in"]</button>
+                <button class="btn btn-success btn-block" data-disable-with="Signing in..." type="submit">@Localizer["Sign in"]</button>
             </form>
         </div>
         <a class="card-footer clearfix small z-1" asp-controller="OAuth" asp-action="Register" asp-route-redirect_uri="@Model?.ToRedirect" asp-route-state="@Model?.State" asp-route-appid="@Model?.AppId" asp-route-scope="@Model?.Scope" asp-route-response_type="@Model?.ResponseType">

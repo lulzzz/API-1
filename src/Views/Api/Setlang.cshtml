@@ -12,13 +12,13 @@
                 <input type="hidden" name="culture" value="zh" />
                 <input type="hidden" name="Host" value="@Model.Host" />
                 <input type="hidden" name="Path" value="@Model.Path" />
-                <input class="btn btn-block btn-primary" type="submit" value="中文 - 中国" />
+                <input class="btn btn-block btn-primary" data-disable-with="Applying..." type="submit" value="中文 - 中国" />
             </form>
             <form asp-controller="api" asp-action="setlang" class="pt-2" method="post">
                 <input type="hidden" name="culture" value="en" />
                 <input type="hidden" name="Host" value="@Model.Host" />
                 <input type="hidden" name="Path" value="@Model.Path" />
-                <input class="btn btn-block btn-primary" type="submit" value="English - United States" />
+                <input class="btn btn-block btn-primary" data-disable-with="Applying..." type="submit" value="English - United States" />
             </form>
         </div>
     </div>

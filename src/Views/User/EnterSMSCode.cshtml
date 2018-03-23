@@ -24,7 +24,7 @@
                     <input type="text" asp-for="Code" class="form-control" placeholder="@Localizer["Enter your Code"]">
                     <span asp-validation-for="Code" class="text-danger"></span>
                 </div>
-                <button class="btn btn-primary btn-block" type="submit">@Localizer["Check code"]</button>
+                <button class="btn btn-primary btn-block" data-disable-with="Checking..." type="submit">@Localizer["Check code"]</button>
             </form>
         </div>
     </div>
