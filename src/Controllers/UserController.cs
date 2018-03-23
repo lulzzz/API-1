@@ -65,16 +65,20 @@ namespace Aiursoft.API.Controllers
         [AiurExceptionHandler]
         public async Task<JsonResult> ChangeProfile(ChangeProfileAddressModel model)
         {
-            var target = await _dbContext
+            var accessToken = await _dbContext
                 .AccessToken
                 .SingleOrDefaultAsync(t => t.Value == model.AccessToken);
 
             var targetUser = await _dbContext.Users.FindAsync(model.OpenId);
-            if (!_dbContext.LocalAppGrant.Exists(t => t.AppID == target.ApplyAppId && t.APIUserId == targetUser.Id))
+            var app = await ApiService.AppInfoAsync(accessToken.ApplyAppId);
+            if (!_dbContext.LocalAppGrant.Exists(t => t.AppID == accessToken.ApplyAppId && t.APIUserId == targetUser.Id))
             {
                 return Json(new AiurProtocal { code = ErrorType.Unauthorized, message = "This user did not grant your app!" });
             }
-
+            if (!app.App.ChangeBasicInfo)
+            {
+                return this.Protocal(ErrorType.Unauthorized, "You app is not allowed to change users' basic info.");
+            }
             if (!string.IsNullOrEmpty(model.NewNickName))
             {
                 targetUser.NickName = model.NewNickName;
