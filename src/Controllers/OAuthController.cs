@@ -125,7 +125,12 @@ namespace Aiursoft.API.Controllers
                     Scope = model.Scope,
                     ResponseType = model.ResponseType,
                     UserIcon = cuser.HeadImgUrl,
-                    Permissions = capp.Permissions
+                    ViewOpenId = capp.ViewOpenId,
+                    ViewPhoneNumber = capp.ViewPhoneNumber,
+                    ChangePhoneNumber = capp.ChangePhoneNumber,
+                    ConfirmEmail = capp.ConfirmEmail,
+                    ChangeBasicInfo = capp.ChangeBasicInfo,
+                    ChangePassword = capp.ChangePassword
                 };
                 return View(viewModel);
             }

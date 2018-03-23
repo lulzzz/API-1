@@ -17,9 +17,29 @@
             </div>
             <p>@Html.DisplayFor(t => t.AppName) has following permissions:</p>
             <ul>
-                @foreach (var permit in Model.Permissions)
+                @if (Model.ViewOpenId)
                 {
-                    <li>@permit.Permission.PermissionName</li>
+                    <li>View your open id.</li>
+                }
+                @if (Model.ViewPhoneNumber)
+                {
+                    <li> View your phone number.</li>
+                }
+                @if (Model.ChangePhoneNumber)
+                {
+                    <li> Change your phone number.</li>
+                }
+                @if (Model.ConfirmEmail)
+                {
+                    <li>Change your email confirmation status.</li>
+                }
+                @if (Model.ChangeBasicInfo)
+                {
+                    <li>Change your basic information.</li>
+                }
+                @if (Model.ChangePassword)
+                {
+                    <li>Change your password.</li>
                 }
             </ul>
             <form asp-controller="OAuth" asp-action="AuthorizeConfirm" method="post">
