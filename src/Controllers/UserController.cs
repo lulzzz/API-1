@@ -121,16 +121,55 @@ namespace Aiursoft.API.Controllers
         [ForceValidateModelState]
         [ForceValidateAccessToken]
         [AiurExceptionHandler]
-        public async Task<JsonResult> SetPhoneNumber(SetPhoneNumberAddressModel model)
+        public async Task<IActionResult> ViewPhoneNumber(ViewPhoneNumberAddressModel model)
         {
-            var target = await _dbContext
+            var accessToken = await _dbContext
                 .AccessToken
                 .SingleOrDefaultAsync(t => t.Value == model.AccessToken);
 
+            var app = await ApiService.AppInfoAsync(accessToken.ApplyAppId);
             var targetUser = await _dbContext.Users.FindAsync(model.OpenId);
-            if (!_dbContext.LocalAppGrant.Exists(t => t.AppID == target.ApplyAppId && t.APIUserId == targetUser.Id))
+            if (targetUser == null)
+            {
+                return this.Protocal(ErrorType.NotFound, "Could not find target user.");
+            }
+            if (!_dbContext.LocalAppGrant.Exists(t => t.AppID == accessToken.ApplyAppId && t.APIUserId == targetUser.Id))
             {
                 return Json(new AiurProtocal { code = ErrorType.Unauthorized, message = "This user did not grant your app!" });
+            }
+            if (!app.App.ViewPhoneNumber)
+            {
+                return this.Protocal(ErrorType.Unauthorized, "You app is not allowed to view users' phone number.");
+            }
+            return Json(new AiurValue<string>(targetUser.PhoneNumber)
+            {
+                code = ErrorType.Success,
+                message = "Successfully get the target user's phone number."
+            });
+        }
+
+        [ForceValidateModelState]
+        [ForceValidateAccessToken]
+        [AiurExceptionHandler]
+        public async Task<JsonResult> SetPhoneNumber(SetPhoneNumberAddressModel model)
+        {
+            var accessToken = await _dbContext
+                .AccessToken
+                .SingleOrDefaultAsync(t => t.Value == model.AccessToken);
+
+            var app = await ApiService.AppInfoAsync(accessToken.ApplyAppId);
+            var targetUser = await _dbContext.Users.FindAsync(model.OpenId);
+            if (targetUser == null)
+            {
+                return this.Protocal(ErrorType.NotFound, "Could not find target user.");
+            }
+            if (!_dbContext.LocalAppGrant.Exists(t => t.AppID == accessToken.ApplyAppId && t.APIUserId == targetUser.Id))
+            {
+                return Json(new AiurProtocal { code = ErrorType.Unauthorized, message = "This user did not grant your app!" });
+            }
+            if (!app.App.ChangePhoneNumber)
+            {
+                return this.Protocal(ErrorType.Unauthorized, "You app is not allowed to set users' phone number.");
             }
             if (string.IsNullOrWhiteSpace(model.Phone))
             {
