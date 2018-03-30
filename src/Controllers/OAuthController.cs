@@ -19,6 +19,8 @@ using Aiursoft.Pylon.Models.API.OAuthViewModels;
 using Aiursoft.Pylon.Models.ForApps.AddressModels;
 using Aiursoft.Pylon;
 using Aiursoft.Pylon.Attributes;
+using Aiursoft.Pylon.Exceptions;
+using Aiursoft.Pylon.Models.Developer;
 
 namespace Aiursoft.API.Controllers
 {
@@ -48,7 +50,15 @@ namespace Aiursoft.API.Controllers
         //http://localhost:53657/oauth/authorize?appid=29bf5250a6d93d47b6164ac2821d5009&redirect_uri=http%3A%2F%2Flocalhost%3A55771%2FAuth%2FAuthResult&response_type=code&scope=snsapi_base&state=http%3A%2F%2Flocalhost%3A55771%2FAuth%2FGoAuth#aiursoft_redirect
         public async Task<IActionResult> Authorize(AuthorizeAddressModel model)
         {
-            var capp = (await ApiService.AppInfoAsync(model.appid)).App;
+            App capp = null;
+            try
+            {
+                capp = (await ApiService.AppInfoAsync(model.appid)).App;
+            }
+            catch (AiurUnexceptedResponse e) when (e.Response.code == ErrorType.NotFound)
+            {
+                return NotFound();
+            }
             var url = new Uri(model.redirect_uri);
             var cuser = await GetCurrentUserAsync();
             //Wrong domain
