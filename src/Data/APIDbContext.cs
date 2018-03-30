@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Aiursoft.API.Models;
 using Aiursoft.Pylon.Models.API;
+using Aiursoft.Pylon.Models;
 
 namespace Aiursoft.API.Data
 {
@@ -18,6 +19,7 @@ namespace Aiursoft.API.Data
         public DbSet<AccessToken> AccessToken { get; set; }
         public DbSet<OAuthPack> OAuthPack { get; set; }
         public DbSet<AppGrant> LocalAppGrant { get; set; }
+        public DbSet<UserEmail> UserEmails { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

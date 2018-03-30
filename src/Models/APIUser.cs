@@ -9,6 +9,7 @@ using Aiursoft.Pylon.Models;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using Aiursoft.Pylon.Models.API;
+using System.ComponentModel.DataAnnotations;
 
 namespace Aiursoft.API.Models
 {
@@ -20,6 +21,8 @@ namespace Aiursoft.API.Models
         public virtual List<OAuthPack> Packs { get; set; }
         [InverseProperty(nameof(AppGrant.User))]
         public virtual List<AppGrant> GrantedApps { get; set; }
+        [InverseProperty(nameof(UserEmail.Owner))]
+        public List<UserEmail> Emails { get; set; }
         public virtual string SMSPasswordResetToken { get; set; }
 
         public async virtual Task GrantTargetApp(APIDbContext dbContext, string appId)
@@ -53,5 +56,16 @@ namespace Aiursoft.API.Models
             return appGrant != null;
         }
     }
+    public class UserEmail
+    {
+        [Key]
+        public int Id { get; set; }
+        [EmailAddress]
+        public string EmailAddress { get; set; }
+        public bool Validated { get; set; }
 
+        public string OwnerId { get; set; }
+        [ForeignKey(nameof(OwnerId))]
+        public APIUser Owner { get; set; }
+    }
 }
