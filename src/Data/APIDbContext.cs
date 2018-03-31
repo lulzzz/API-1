@@ -25,5 +25,24 @@ namespace Aiursoft.API.Data
         {
             base.OnModelCreating(builder);
         }
+
+        public async Task Seed()
+        {
+            var users = await Users.Include(t => t.Emails).ToListAsync();
+            foreach (var user in users)
+            {
+                bool hasPrimaryEmail = user.Emails.Exists(t => t.EmailAddress == user.Email.ToLower());
+                if (user.Emails.Count() == 0 || !hasPrimaryEmail)
+                {
+                    var primaryEmail = new UserEmail
+                    {
+                        OwnerId = user.Id,
+                        EmailAddress = user.Email.ToLower()
+                    };
+                    UserEmails.Add(primaryEmail);
+                    await SaveChangesAsync();
+                }
+            }
+        }
     }
 }
