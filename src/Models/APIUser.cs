@@ -62,7 +62,7 @@ namespace Aiursoft.API.Models
         public int Id { get; set; }
         [EmailAddress]
         public string EmailAddress { get; set; }
-        public bool Validated { get; set; }
+        public bool Validated { get; set; } = false;
 
         public string OwnerId { get; set; }
         [ForeignKey(nameof(OwnerId))]

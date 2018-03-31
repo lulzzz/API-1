@@ -24,7 +24,6 @@ using Aiursoft.Pylon.Models.Developer;
 
 namespace Aiursoft.API.Controllers
 {
-    [ForceValidateModelState]
     public class OAuthController : Controller
     {
         private readonly UserManager<APIUser> _userManager;
@@ -262,6 +261,13 @@ namespace Aiursoft.API.Controllers
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
+                    var primaryMail = new UserEmail
+                    {
+                        EmailAddress = model.Email.ToLower(),
+                        OwnerId = user.Id
+                    };
+                    _dbContext.UserEmails.Add(primaryMail);
+                    await _dbContext.SaveChangesAsync();
                     await _signInManager.SignInAsync(user, isPersistent: true);
                     return await FinishAuth(model);
                 }
@@ -271,22 +277,23 @@ namespace Aiursoft.API.Controllers
         }
 
         [HttpPost]
+        [ForceValidateModelState]
         public async Task<IActionResult> AppRegister(AppRegisterAddressModel model)
         {
-            if (ModelState.IsValid)
+            var user = new APIUser { UserName = model.Email, Email = model.Email, NickName = model.Email.Split('@')[0], PreferedLanguage = "en" };
+            var result = await _userManager.CreateAsync(user, model.Password);
+            if (result.Succeeded)
             {
-                var user = new APIUser { UserName = model.Email, Email = model.Email, NickName = model.Email.Split('@')[0], PreferedLanguage = "en" };
-                var result = await _userManager.CreateAsync(user, model.Password);
-                if (result.Succeeded)
+                var primaryMail = new UserEmail
                 {
-                    return this.Protocal(ErrorType.Success, "Successfully created your account.");
-                }
-                return this.Protocal(ErrorType.NotEnoughResources, result.Errors.First().Description);
+                    EmailAddress = model.Email.ToLower(),
+                    OwnerId = user.Id
+                };
+                _dbContext.UserEmails.Add(primaryMail);
+                await _dbContext.SaveChangesAsync();
+                return this.Protocal(ErrorType.Success, "Successfully created your account.");
             }
-            else
-            {
-                return this.Protocal(ErrorType.InvalidInput, "Invalid input!");
-            }
+            return this.Protocal(ErrorType.NotEnoughResources, result.Errors.First().Description);
         }
 
         [Authorize]
