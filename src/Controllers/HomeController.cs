@@ -50,11 +50,6 @@ namespace Aiursoft.API.Controllers
             });
         }
 
-        public IActionResult Error()
-        {
-            return View();
-        }
-
         private async Task<APIUser> GetCurrentUserAsync()
         {
             return await _userManager.GetUserAsync(HttpContext.User);

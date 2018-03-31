@@ -1,3 +1,4 @@
+#warning Reconstruct required!
 using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -77,7 +78,7 @@ namespace Aiursoft.API.Controllers
             {
                 return Redirect($"{url.Scheme}://{url.Host}:{url.Port}/?{Values.directShowString.Key}={Values.directShowString.Value}");
             }
-            //Not signed in.
+            //Could process.
             else if (ModelState.IsValid)
             {
                 var viewModel = new AuthorizeViewModel(model.redirect_uri, model.state, model.appid, model.scope, model.response_type, capp.AppName, capp.AppIconAddress);
@@ -97,7 +98,7 @@ namespace Aiursoft.API.Controllers
             var mail = await _dbContext
                 .UserEmails
                 .Include(t => t.Owner)
-                .SingleOrDefaultAsync(t => t.EmailAddress == model.Email);
+                .SingleOrDefaultAsync(t => t.EmailAddress == model.Email.ToLower());
             if (mail == null)
             {
                 ModelState.AddModelError(string.Empty, "Unknown user email.");
@@ -261,6 +262,7 @@ namespace Aiursoft.API.Controllers
                 if (exists)
                 {
                     ModelState.AddModelError(string.Empty, $"A user with email: '{model.Email}' already exists!");
+                    return View(model);
                 }
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)

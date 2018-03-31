@@ -57,15 +57,16 @@ namespace Aiursoft.API
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
+                app.UseExceptionHandler("/Error/ServerException");
+                app.UseStatusCodePagesWithReExecute("/Error/Code{0}");
                 app.UseEnforceHttps();
+                dbContext.Seed();
             }
             app.UseAiursoftSupportedCultures();
             app.UseStaticFiles();
             app.UseAuthentication();
             app.UseLanguageSwitcher();
             app.UseMvcWithDefaultRoute();
-            dbContext.Seed();
         }
     }
 }
