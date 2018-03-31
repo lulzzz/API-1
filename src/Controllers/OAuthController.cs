@@ -258,6 +258,11 @@ namespace Aiursoft.API.Controllers
                     NickName = model.Email.Split('@')[0],
                     PreferedLanguage = model.PreferedLanguage
                 };
+                bool exists = _dbContext.UserEmails.Exists(t => t.EmailAddress == model.Email.ToLower());
+                if (exists)
+                {
+                    ModelState.AddModelError(string.Empty, $"A user with email: '{model.Email}' already exists!");
+                }
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
