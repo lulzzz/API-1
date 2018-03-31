@@ -51,34 +51,36 @@ namespace Aiursoft.API.Controllers
         [HttpGet]
         public async Task<IActionResult> Authorize(AuthorizeAddressModel model)
         {
-            App capp = null;
-            try
+            // Handle invalid model state.
+            if(ModelState.IsValid)
             {
-                capp = (await ApiService.AppInfoAsync(model.appid)).App;
+                return View("AuthError");
             }
-            catch (AiurUnexceptedResponse e) when (e.Response.code == ErrorType.NotFound)
+            var capp = (await ApiService.AppInfoAsync(model.appid)).App;
+            if (capp == null)
             {
+                // Handled by middleware
                 return NotFound();
             }
             var url = new Uri(model.redirect_uri);
             var cuser = await GetCurrentUserAsync();
-            //Wrong domain
+            // Wrong domain
             if (url.Host != capp.AppDomain && capp.DebugMode == false)
             {
                 ModelState.AddModelError(string.Empty, "Redirect uri did not work in the valid domain!");
-                return View("autherror");
+                return View("AuthError");
             }
-            //Signed in but have to input info.
+            // Signed in but have to input info.
             else if (cuser != null && capp.ForceInputPassword == false && model.forceConfirm != true)
             {
                 return await FinishAuth(model.Convert(cuser.Email), capp.ForceConfirmation);
             }
-            //Not signed in but we don't want his info
+            // Not signed in but we don't want his info
             else if (model.tryAutho == true)
             {
                 return Redirect($"{url.Scheme}://{url.Host}:{url.Port}/?{Values.directShowString.Key}={Values.directShowString.Value}");
             }
-            //Could process.
+            // Could process.
             else if (ModelState.IsValid)
             {
                 var viewModel = new AuthorizeViewModel(model.redirect_uri, model.state, model.appid, model.scope, model.response_type, capp.AppName, capp.AppIconAddress);
