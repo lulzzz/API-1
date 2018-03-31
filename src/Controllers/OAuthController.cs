@@ -94,9 +94,18 @@ namespace Aiursoft.API.Controllers
         public async Task<IActionResult> Authorize(AuthorizeViewModel model)
         {
             var capp = (await ApiService.AppInfoAsync(model.AppId)).App;
+            var mail = await _dbContext
+                .UserEmails
+                .Include(t => t.Owner)
+                .SingleOrDefaultAsync(t => t.EmailAddress == model.Email);
+            if (mail == null)
+            {
+                ModelState.AddModelError(string.Empty, "Unknown user email.");
+            }
             if (ModelState.IsValid)
             {
-                var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, isPersistent: true, lockoutOnFailure: true);
+                var user = mail.Owner;
+                var result = await _signInManager.PasswordSignInAsync(user, model.Password, isPersistent: true, lockoutOnFailure: true);
                 if (result.Succeeded)
                 {
                     return await FinishAuth(model, capp.ForceConfirmation);
