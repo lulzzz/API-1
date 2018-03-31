@@ -52,7 +52,7 @@ namespace Aiursoft.API.Controllers
         public async Task<IActionResult> Authorize(AuthorizeAddressModel model)
         {
             // Handle invalid model state.
-            if(ModelState.IsValid)
+            if(!ModelState.IsValid)
             {
                 return View("AuthError");
             }
@@ -68,6 +68,7 @@ namespace Aiursoft.API.Controllers
             if (url.Host != capp.AppDomain && capp.DebugMode == false)
             {
                 ModelState.AddModelError(string.Empty, "Redirect uri did not work in the valid domain!");
+                _logger.LogInformation($"A request with appId {model.appid} is access wrong domian.");
                 return View("AuthError");
             }
             // Signed in but have to input info.
@@ -80,27 +81,24 @@ namespace Aiursoft.API.Controllers
             {
                 return Redirect($"{url.Scheme}://{url.Host}:{url.Port}/?{Values.directShowString.Key}={Values.directShowString.Value}");
             }
-            // Could process.
-            else if (ModelState.IsValid)
-            {
-                var viewModel = new AuthorizeViewModel(model.redirect_uri, model.state, model.appid, model.scope, model.response_type, capp.AppName, capp.AppIconAddress);
-                return View(viewModel);
-            }
-            //Error
-            else
-            {
-                return View("autherror");
-            }
+            var viewModel = new AuthorizeViewModel(model.redirect_uri, model.state, model.appid, model.scope, model.response_type, capp.AppName, capp.AppIconAddress);
+            return View(viewModel);
         }
 
         [HttpPost]
         public async Task<IActionResult> Authorize(AuthorizeViewModel model)
         {
             var capp = (await ApiService.AppInfoAsync(model.AppId)).App;
+            if (capp == null)
+            {
+                // App id invalid
+                return NotFound();
+            }
             var mail = await _dbContext
                 .UserEmails
                 .Include(t => t.Owner)
                 .SingleOrDefaultAsync(t => t.EmailAddress == model.Email.ToLower());
+            //Email invalid
             if (mail == null)
             {
                 ModelState.AddModelError(string.Empty, "Unknown user email.");

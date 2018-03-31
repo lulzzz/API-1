@@ -9,8 +9,8 @@ namespace Aiursoft.API.Models.OAuthViewModels
 {
     public class AuthorizeViewModel : IOAuthInfo
     {
-        [ObsoleteAttribute("This method is only for framework!",true)]
-        public AuthorizeViewModel(){}
+        [Obsolete("This method is only for framework!", true)]
+        public AuthorizeViewModel() { }
         public AuthorizeViewModel(string ToRedirect, string State, string AppId, string Scope, string ResponseTpe, string AppName, string AppImageUrl)
         {
             this.ToRedirect = ToRedirect;
