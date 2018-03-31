@@ -10,6 +10,23 @@ namespace Aiursoft.API.Models.OAuthViewModels
 
     public class RegisterViewModel : IOAuthInfo
     {
+        [Obsolete(error: true, message: "This function is only for framework.")]
+        public RegisterViewModel() { }
+        public RegisterViewModel(string ToRedirect, string State, string AppId, string Scope, string ResponseTpe, string AppName, string AppImageUrl)
+        {
+            this.ToRedirect = ToRedirect;
+            this.State = State;
+            this.AppId = AppId;
+            this.Scope = Scope;
+            this.ResponseType = ResponseTpe;
+            Recover(AppName, AppImageUrl);
+        }
+        public void Recover(string AppName, string AppImageUrl)
+        {
+            this.AppName = AppName;
+            this.AppImageUrl = AppImageUrl;
+        }
+
         [Url]
         public virtual string ToRedirect { get; set; }
         public virtual string State { get; set; }
@@ -17,6 +34,7 @@ namespace Aiursoft.API.Models.OAuthViewModels
         public string ResponseType { get; set; }
         public string Scope { get; set; }
 
+        public string AppName { get; set; }
         public string AppImageUrl { get; set; }
 
         [Required]

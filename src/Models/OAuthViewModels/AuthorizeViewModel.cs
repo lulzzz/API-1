@@ -42,6 +42,7 @@ namespace Aiursoft.API.Models.OAuthViewModels
         public string ToRedirect { get; set; }
 
         public string State { get; set; }
+        [Required]
         public string AppId { get; set; }
         public string ResponseType { get; set; }
         public string Scope { get; set; }

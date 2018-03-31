@@ -51,13 +51,8 @@ namespace Aiursoft.API.Controllers
         [HttpGet]
         public async Task<IActionResult> Authorize(AuthorizeAddressModel model)
         {
-            // Handle invalid model state.
-            if(!ModelState.IsValid)
-            {
-                return View("AuthError");
-            }
-            var capp = (await ApiService.AppInfoAsync(model.appid)).App;
-            if (capp == null)
+            var app = (await ApiService.AppInfoAsync(model.appid)).App;
+            if (app == null)
             {
                 // Handled by middleware
                 return NotFound();
@@ -65,31 +60,31 @@ namespace Aiursoft.API.Controllers
             var url = new Uri(model.redirect_uri);
             var cuser = await GetCurrentUserAsync();
             // Wrong domain
-            if (url.Host != capp.AppDomain && capp.DebugMode == false)
+            if (url.Host != app.AppDomain && app.DebugMode == false)
             {
                 ModelState.AddModelError(string.Empty, "Redirect uri did not work in the valid domain!");
                 _logger.LogInformation($"A request with appId {model.appid} is access wrong domian.");
                 return View("AuthError");
             }
             // Signed in but have to input info.
-            else if (cuser != null && capp.ForceInputPassword == false && model.forceConfirm != true)
+            else if (cuser != null && app.ForceInputPassword == false && model.forceConfirm != true)
             {
-                return await FinishAuth(model.Convert(cuser.Email), capp.ForceConfirmation);
+                return await FinishAuth(model.Convert(cuser.Email), app.ForceConfirmation);
             }
             // Not signed in but we don't want his info
             else if (model.tryAutho == true)
             {
                 return Redirect($"{url.Scheme}://{url.Host}:{url.Port}/?{Values.directShowString.Key}={Values.directShowString.Value}");
             }
-            var viewModel = new AuthorizeViewModel(model.redirect_uri, model.state, model.appid, model.scope, model.response_type, capp.AppName, capp.AppIconAddress);
+            var viewModel = new AuthorizeViewModel(model.redirect_uri, model.state, model.appid, model.scope, model.response_type, app.AppName, app.AppIconAddress);
             return View(viewModel);
         }
 
         [HttpPost]
         public async Task<IActionResult> Authorize(AuthorizeViewModel model)
         {
-            var capp = (await ApiService.AppInfoAsync(model.AppId)).App;
-            if (capp == null)
+            var app = (await ApiService.AppInfoAsync(model.AppId)).App;
+            if (app == null)
             {
                 // App id invalid
                 return NotFound();
@@ -101,6 +96,7 @@ namespace Aiursoft.API.Controllers
             //Email invalid
             if (mail == null)
             {
+                // Mail invalid
                 ModelState.AddModelError(string.Empty, "Unknown user email.");
             }
             if (ModelState.IsValid)
@@ -109,7 +105,7 @@ namespace Aiursoft.API.Controllers
                 var result = await _signInManager.PasswordSignInAsync(user, model.Password, isPersistent: true, lockoutOnFailure: true);
                 if (result.Succeeded)
                 {
-                    return await FinishAuth(model, capp.ForceConfirmation);
+                    return await FinishAuth(model, app.ForceConfirmation);
                 }
                 else if (result.RequiresTwoFactor)
                 {
@@ -117,14 +113,14 @@ namespace Aiursoft.API.Controllers
                 }
                 else if (result.IsLockedOut)
                 {
-                    throw new NotImplementedException();
+                    ModelState.AddModelError(string.Empty, "The account is locked for too many attempts.");
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                    ModelState.AddModelError(string.Empty, "The password does not match our records.");
                 }
             }
-            model.Recover(capp.AppName, capp.AppIconAddress);
+            model.Recover(app.AppName, app.AppIconAddress);
             return View(model);
         }
 
@@ -145,6 +141,7 @@ namespace Aiursoft.API.Controllers
                     Scope = model.Scope,
                     ResponseType = model.ResponseType,
                     UserIcon = cuser.HeadImgUrl,
+                    // Permissions
                     ViewOpenId = capp.ViewOpenId,
                     ViewPhoneNumber = capp.ViewPhoneNumber,
                     ChangePhoneNumber = capp.ChangePhoneNumber,
@@ -232,53 +229,58 @@ namespace Aiursoft.API.Controllers
             if (ModelState.IsValid)
             {
                 var capp = (await ApiService.AppInfoAsync(model.appid)).App;
-                var viewModel = new RegisterViewModel()
+                if (capp == null)
                 {
-                    ToRedirect = model.redirect_uri,
-                    State = model.state,
-                    AppId = model.appid,
-                    Scope = model.scope,
-                    ResponseType = model.response_type,
-                    AppImageUrl = capp.AppIconAddress
-                };
+                    return NotFound();
+                }
+                var viewModel = new RegisterViewModel(model.redirect_uri, model.state, model.appid, model.scope, model.response_type, capp.AppName, capp.AppIconAddress);
                 return View(viewModel);
             }
-            return View();
+            return View("AuthError");
         }
 
         [HttpPost]
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
-            if (ModelState.IsValid)
+            var capp = (await ApiService.AppInfoAsync(model.AppId)).App;
+            if (capp == null)
             {
-                var user = new APIUser
-                {
-                    UserName = model.Email,
-                    Email = model.Email,
-                    NickName = model.Email.Split('@')[0],
-                    PreferedLanguage = model.PreferedLanguage
-                };
-                bool exists = _dbContext.UserEmails.Exists(t => t.EmailAddress == model.Email.ToLower());
-                if (exists)
-                {
-                    ModelState.AddModelError(string.Empty, $"A user with email: '{model.Email}' already exists!");
-                    return View(model);
-                }
-                var result = await _userManager.CreateAsync(user, model.Password);
-                if (result.Succeeded)
-                {
-                    var primaryMail = new UserEmail
-                    {
-                        EmailAddress = model.Email.ToLower(),
-                        OwnerId = user.Id
-                    };
-                    _dbContext.UserEmails.Add(primaryMail);
-                    await _dbContext.SaveChangesAsync();
-                    await _signInManager.SignInAsync(user, isPersistent: true);
-                    return await FinishAuth(model);
-                }
-                AddErrors(result);
+                return NotFound();
             }
+            if(!ModelState.IsValid)
+            {
+                model.Recover(capp.AppName, capp.AppIconAddress);
+                return View(model);
+            }
+            bool exists = _dbContext.UserEmails.Exists(t => t.EmailAddress == model.Email.ToLower());
+            if (exists)
+            {
+                ModelState.AddModelError(string.Empty, $"A user with email: '{model.Email}' already exists!");
+                model.Recover(capp.AppName, capp.AppIconAddress);
+                return View(model);
+            }
+            var user = new APIUser
+            {
+                UserName = model.Email,
+                Email = model.Email,
+                NickName = model.Email.Split('@')[0],
+                PreferedLanguage = model.PreferedLanguage
+            };
+            var result = await _userManager.CreateAsync(user, model.Password);
+            if (result.Succeeded)
+            {
+                var primaryMail = new UserEmail
+                {
+                    EmailAddress = model.Email.ToLower(),
+                    OwnerId = user.Id
+                };
+                _dbContext.UserEmails.Add(primaryMail);
+                await _dbContext.SaveChangesAsync();
+                await _signInManager.SignInAsync(user, isPersistent: true);
+                return await FinishAuth(model);
+            }
+            AddErrors(result);
+            model.Recover(capp.AppName, capp.AppIconAddress);
             return View(model);
         }
 
