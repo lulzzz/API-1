@@ -48,6 +48,7 @@ namespace Aiursoft.API.Controllers
         }
 
         //http://localhost:53657/oauth/authorize?appid=29bf5250a6d93d47b6164ac2821d5009&redirect_uri=http%3A%2F%2Flocalhost%3A55771%2FAuth%2FAuthResult&response_type=code&scope=snsapi_base&state=http%3A%2F%2Flocalhost%3A55771%2FAuth%2FGoAuth#aiursoft_redirect
+        [HttpGet]
         public async Task<IActionResult> Authorize(AuthorizeAddressModel model)
         {
             App capp = null;
@@ -171,13 +172,23 @@ namespace Aiursoft.API.Controllers
         }
 
         [HttpPost]
+        [ForceValidateModelState]
         public async Task<IActionResult> PasswordAuth(PasswordAuthAddressModel model)
         {
             OAuthPack pack = null;
             var capp = (await ApiService.AppInfoAsync(model.AppId)).App;
+            var mail = await _dbContext
+                .UserEmails
+                .Include(t => t.Owner)
+                .SingleOrDefaultAsync(t => t.EmailAddress == model.Email);
+            if (mail == null)
+            {
+                ModelState.AddModelError(string.Empty, "Unknown user email.");
+            }
             if (ModelState.IsValid)
             {
-                var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, isPersistent: false, lockoutOnFailure: true);
+                var user = mail.Owner;
+                var result = await _signInManager.PasswordSignInAsync(user, model.Password, isPersistent: false, lockoutOnFailure: true);
                 if (result.Succeeded)
                 {
                     var cuser = await GetCurrentUserAsync(model.Email);
@@ -206,6 +217,7 @@ namespace Aiursoft.API.Controllers
                 }
                 else
                 {
+                    // Issue: Can not response this error message.
                     ModelState.AddModelError(string.Empty, "Invalid login attempt.");
                 }
             }
