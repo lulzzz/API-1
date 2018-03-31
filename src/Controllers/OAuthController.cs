@@ -190,15 +190,14 @@ namespace Aiursoft.API.Controllers
                 var result = await _signInManager.PasswordSignInAsync(user, model.Password, isPersistent: false, lockoutOnFailure: true);
                 if (result.Succeeded)
                 {
-                    var cuser = await GetCurrentUserAsync(model.Email);
-                    if (await cuser.HasAuthorizedApp(_dbContext, model.AppId))
+                    if (await user.HasAuthorizedApp(_dbContext, model.AppId))
                     {
-                        pack = await cuser.GeneratePack(_dbContext, model.AppId);
+                        pack = await user.GeneratePack(_dbContext, model.AppId);
                     }
                     else
                     {
-                        await cuser.GrantTargetApp(_dbContext, model.AppId);
-                        pack = await cuser.GeneratePack(_dbContext, model.AppId);
+                        await user.GrantTargetApp(_dbContext, model.AppId);
+                        pack = await user.GeneratePack(_dbContext, model.AppId);
                     }
                     return Json(new AiurValue<int>(pack.Code)
                     {
@@ -385,16 +384,19 @@ namespace Aiursoft.API.Controllers
             }
         }
 
+        private async Task<APIUser> GetCurrentUserAsync(string Email)
+        {
+            var mail = await _dbContext
+                .UserEmails
+                .Include(t => t.Owner)
+                .SingleOrDefaultAsync(t => t.EmailAddress == Email);
+            return mail.Owner;
+        }
+
         private async Task<APIUser> GetCurrentUserAsync()
         {
             return await _dbContext.Users
                 .SingleOrDefaultAsync(t => t.UserName == User.Identity.Name);
-        }
-
-        private async Task<APIUser> GetCurrentUserAsync(string email)
-        {
-            return await _dbContext.Users
-                .SingleOrDefaultAsync(t => t.Email == email);
         }
 
         private async Task<IActionResult> FinishAuth(IOAuthInfo model, bool forceGrant = false)
