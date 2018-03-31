@@ -26,9 +26,9 @@ namespace Aiursoft.API.Data
             base.OnModelCreating(builder);
         }
 
-        public async Task Seed()
+        public void Seed()
         {
-            var users = await Users.Include(t => t.Emails).ToListAsync();
+            var users = Users.Include(t => t.Emails).ToList();
             foreach (var user in users)
             {
                 bool hasPrimaryEmail = user.Emails.Exists(t => t.EmailAddress == user.Email.ToLower());
@@ -40,7 +40,7 @@ namespace Aiursoft.API.Data
                         EmailAddress = user.Email.ToLower()
                     };
                     UserEmails.Add(primaryEmail);
-                    await SaveChangesAsync();
+                    SaveChanges();
                 }
             }
         }
